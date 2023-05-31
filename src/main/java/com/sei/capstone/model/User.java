@@ -1,6 +1,8 @@
 package com.sei.capstone.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -19,6 +21,14 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    /**
+     * Only one user to one profile!
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private UserProfile userProfile;
+
+
     public User() {
     }
 
@@ -26,6 +36,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
 
     public Long getId() {
         return id;

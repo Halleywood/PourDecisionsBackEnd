@@ -1,6 +1,10 @@
 package com.sei.capstone.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="wines")
@@ -37,6 +41,11 @@ public class Wine {
 
     @Column
     private String pairing;
+
+    @OneToMany(mappedBy="wine", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Post> postsAboutThisWine;
+
 
     public Wine() {
     }

@@ -21,6 +21,20 @@ public class Post {
     @Column
     private Integer rating;
 
+    /**
+     * many posts belong to one userprofile
+     */
+    @ManyToOne()
+    @JoinColumn(name="userProfile_id")
+    private UserProfile userProfile;
+
+    /**
+     * many posts belong to one wine
+     */
+    @ManyToOne()
+    @JoinColumn(name="wine_id")
+    private Wine wine;
+
     public Post() {
     }
 
