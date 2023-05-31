@@ -12,7 +12,7 @@ public class UserProfile {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long profileId;
+    private Long id;
 
     @Column(unique = true)
     private String userName;
@@ -23,10 +23,18 @@ public class UserProfile {
     /**
      * Only one userProfile to one User.
      */
-    @OneToOne(mappedBy = "userProfile")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    public UserProfile() {
+
+    public User getUser() {
+        return user;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     /**
      * a UserProfile can have many posts about the wines they've tried.
@@ -34,20 +42,36 @@ public class UserProfile {
     @OneToMany(mappedBy = "userProfile")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> userPosts;
-    
 
+    public List<Post> getUserPosts() {
+        return userPosts;
+    }
+
+    public void setUserPosts(List<Post> userPosts) {
+        this.userPosts = userPosts;
+    }
+
+    /**
+     * CONSTRUCTORS
+     */
+    public UserProfile() {
+    }
     public UserProfile( String userName, String tagline) {
         this.userName = userName;
         this.tagline = tagline;
     }
 
-    public Long getProfileId() {
-        return profileId;
+    /**
+     * GETTERS AND SETTERS
+     */
+    public Long getId() {
+        return id;
     }
 
-    public void setProfileId(Long profileId) {
-        this.profileId = profileId;
+    public void setId(Long id) {
+        this.id = id;
     }
+
 
     public String getUserName() {
         return userName;
@@ -65,12 +89,5 @@ public class UserProfile {
         this.tagline = tagline;
     }
 
-    @Override
-    public String toString() {
-        return "UserProfile{" +
-                "profileId=" + profileId +
-                ", userName='" + userName + '\'' +
-                ", tagline='" + tagline + '\'' +
-                '}';
-    }
+
 }

@@ -24,11 +24,20 @@ public class User {
     /**
      * Only one user to one profile!
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user")
     private UserProfile userProfile;
 
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
 
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    /**
+     * CONSTRUCTORS
+     */
     public User() {
     }
 
@@ -37,7 +46,9 @@ public class User {
         this.password = password;
     }
 
-
+    /**
+     * GETTERS AND SETTERS
+     */
     public Long getId() {
         return id;
     }

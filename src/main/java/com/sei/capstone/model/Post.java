@@ -28,6 +28,14 @@ public class Post {
     @JoinColumn(name="userProfile_id")
     private UserProfile userProfile;
 
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
     /**
      * many posts belong to one wine
      */
@@ -35,6 +43,17 @@ public class Post {
     @JoinColumn(name="wine_id")
     private Wine wine;
 
+    public Wine getWine() {
+        return wine;
+    }
+
+    public void setWine(Wine wine) {
+        this.wine = wine;
+    }
+
+    /**
+     * CONSTRUCTORS
+     */
     public Post() {
     }
 
@@ -44,6 +63,9 @@ public class Post {
         this.rating = rating;
     }
 
+    /**
+     * GETTERS AND SETTERS
+     */
     public Long getId() {
         return id;
     }

@@ -46,7 +46,17 @@ public class Wine {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> postsAboutThisWine;
 
+    public List<Post> getPostsAboutThisWine() {
+        return postsAboutThisWine;
+    }
 
+    public void setPostsAboutThisWine(List<Post> postsAboutThisWine) {
+        this.postsAboutThisWine = postsAboutThisWine;
+    }
+
+    /**
+     * CONSTRUCTORS
+     */
     public Wine() {
     }
 
@@ -62,6 +72,9 @@ public class Wine {
         this.pairing = pairing;
     }
 
+    /**
+     * GETTERS AND SETTERS
+     */
     public Long getId() {
         return id;
     }
