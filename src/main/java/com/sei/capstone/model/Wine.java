@@ -1,6 +1,7 @@
 package com.sei.capstone.model;
 
 public class Wine {
+    private Long id;
     private String name;
     private String vintage;
     private String varietal;
