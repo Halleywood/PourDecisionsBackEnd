@@ -19,8 +19,7 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(Long profileId, String userName, String tagline) {
-        this.profileId = profileId;
+    public UserProfile( String userName, String tagline) {
         this.userName = userName;
         this.tagline = tagline;
     }
