@@ -4,7 +4,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_profiles")
@@ -19,6 +21,9 @@ public class UserProfile {
 
     @Column
     private String tagline;
+
+    @Column
+    private String imgSrc;
 
     /**
      * Only one userProfile to one User.
@@ -52,13 +57,42 @@ public class UserProfile {
     }
 
     /**
+     * A userProfile can follow many userProfiles
+     */
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL)
+    private Set<FollowRelationship> followers = new HashSet<>();
+
+    public Set<FollowRelationship> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<FollowRelationship> followers) {
+        this.followers = followers;
+    }
+
+    /**
+     * A userProfile can be followed by many other userProfiles
+     */
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
+    private Set<FollowRelationship> following = new HashSet<>();
+
+    public Set<FollowRelationship> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<FollowRelationship> following) {
+        this.following = following;
+    }
+
+    /**
      * CONSTRUCTORS
      */
     public UserProfile() {
     }
-    public UserProfile( String userName, String tagline) {
+    public UserProfile( String userName, String tagline, String imgSrc) {
         this.userName = userName;
         this.tagline = tagline;
+        this.imgSrc = imgSrc;
     }
 
     /**
@@ -89,5 +123,25 @@ public class UserProfile {
         this.tagline = tagline;
     }
 
+    public String getImgSrc() {
+        return imgSrc;
+    }
 
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", imgSrc='" + imgSrc + '\'' +
+                ", user=" + user +
+                ", userPosts=" + userPosts +
+                ", followers=" + followers +
+                ", following=" + following +
+                '}';
+    }
 }

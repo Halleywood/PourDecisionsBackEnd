@@ -42,6 +42,9 @@ public class Wine {
     @Column
     private String pairing;
 
+    @Column
+    private String imgSrc;
+
     @OneToMany(mappedBy="wine", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> postsAboutThisWine;
@@ -60,7 +63,7 @@ public class Wine {
     public Wine() {
     }
 
-    public Wine(String name, String vintage, String varietal, String vitner, String tastingNotes, String glassWare, String aerationTime, Integer servingTemperature, String pairing) {
+    public Wine(String name, String vintage, String varietal, String vitner, String tastingNotes, String glassWare, String aerationTime, Integer servingTemperature, String pairing, String imgSrc) {
         this.name = name;
         this.vintage = vintage;
         this.varietal = varietal;
@@ -70,6 +73,7 @@ public class Wine {
         this.aerationTime = aerationTime;
         this.servingTemperature = servingTemperature;
         this.pairing = pairing;
+        this.imgSrc = imgSrc;
     }
 
     /**
@@ -155,6 +159,14 @@ public class Wine {
         this.pairing = pairing;
     }
 
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
     @Override
     public String toString() {
         return "Wine{" +
@@ -168,6 +180,8 @@ public class Wine {
                 ", aerationTime='" + aerationTime + '\'' +
                 ", servingTemperature=" + servingTemperature +
                 ", pairing='" + pairing + '\'' +
+                ", imgSrc='" + imgSrc + '\'' +
+                ", postsAboutThisWine=" + postsAboutThisWine +
                 '}';
     }
 }

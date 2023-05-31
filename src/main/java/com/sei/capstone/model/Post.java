@@ -21,6 +21,9 @@ public class Post {
     @Column
     private Integer rating;
 
+    @Column
+    private String imgSrc;
+
     /**
      * many posts belong to one userprofile
      */
@@ -61,6 +64,7 @@ public class Post {
         this.title = title;
         this.tastingNotes = tastingNotes;
         this.rating = rating;
+        this.imgSrc = imgSrc;
     }
 
     /**
@@ -98,6 +102,14 @@ public class Post {
         this.rating = rating;
     }
 
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -105,6 +117,9 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", tastingNotes='" + tastingNotes + '\'' +
                 ", rating=" + rating +
+                ", imgSrc='" + imgSrc + '\'' +
+                ", userProfile=" + userProfile +
+                ", wine=" + wine +
                 '}';
     }
 }
