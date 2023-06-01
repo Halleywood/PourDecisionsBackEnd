@@ -78,7 +78,6 @@ public class SecurityController {
 
     @GetMapping(path="/test")
     public String testMethod(){
-        System.out.println("HELLO!");
         return "HELLOOOO";
     }
 
