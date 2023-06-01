@@ -1,5 +1,6 @@
 package com.sei.capstone.controller;
 
+import com.sei.capstone.exceptions.UserDoesNotExist;
 import com.sei.capstone.exceptions.UserExistsException;
 import com.sei.capstone.model.User;
 import com.sei.capstone.repository.UserRepository;
@@ -34,7 +35,6 @@ public class SecurityController {
     }
 
 //    @PostMapping(path="/login")
-//    public User login(@RequestBody User userObject){
-//
+//    public User login(@RequestBody User userObject) {
 //    }
 }
