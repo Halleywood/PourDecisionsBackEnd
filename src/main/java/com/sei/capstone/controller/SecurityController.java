@@ -70,7 +70,6 @@ public class SecurityController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             myUserDetails = (MyUserDetails) authentication.getPrincipal();
             final String JWT = jwUtils.generateJwtToken(myUserDetails);
-            System.out.println(ResponseEntity.ok(new LoginResponse(JWT)));
             return ResponseEntity.ok(new LoginResponse(JWT));
         } catch(Exception e){
             return ResponseEntity.ok(new LoginResponse("Error: username or password is incorrect"));
