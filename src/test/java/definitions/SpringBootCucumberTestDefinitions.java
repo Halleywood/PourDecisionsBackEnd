@@ -41,7 +41,7 @@ public class SpringBootCucumberTestDefinitions {
             requestBody.put("email", "email@email.com");
             requestBody.put("password", "password");
             request.header("Content-Type", "application/json");
-            response = request.body(requestBody.toString()).post(BASE_URL + port + "/register");
+            response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/register");
             Assert.assertEquals(200, response.statusCode());
         } catch (JSONException e) {
             throw new RuntimeException(e);
