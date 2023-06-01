@@ -60,7 +60,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers(
                         "/auth/register",
-                        "/auth/login"
+                        "/auth/login",
+                        "/auth/test"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
