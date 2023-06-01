@@ -65,7 +65,7 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("email", uniqueEmail);
         requestBody.put("password", uniquePassword);
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
+        response = request.body(requestBody.toString()).post(BASE_URL + port"/auth/login");
     }
 
     @Then("the user can see the homepage")
