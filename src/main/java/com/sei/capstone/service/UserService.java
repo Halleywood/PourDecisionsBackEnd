@@ -80,18 +80,18 @@ public class UserService {
      * @return a ResponseEntity containing a login response
      */
 
-    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            myUserDetails = (MyUserDetails) authentication.getPrincipal();
-            final String JWT = jwUtils.generateJwtToken(myUserDetails);
-            return ResponseEntity.ok(new LoginResponse(JWT));
-        } catch(Exception e){
-            return ResponseEntity.ok(new LoginResponse("Error: username or password is incorrect"));
-        }
-    }
+//    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
+//        try {
+//            Authentication authentication = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            myUserDetails = (MyUserDetails) authentication.getPrincipal();
+//            final String JWT = jwUtils.generateJwtToken(myUserDetails);
+//            return ResponseEntity.ok(new LoginResponse(JWT));
+//        } catch(Exception e){
+//            return ResponseEntity.ok(new LoginResponse("Error: username or password is incorrect"));
+//        }
+//    }
     /**
      * Retrieves the current user.
      * @return the User object representing the current user

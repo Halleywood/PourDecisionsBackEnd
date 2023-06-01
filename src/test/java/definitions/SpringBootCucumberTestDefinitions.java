@@ -39,7 +39,7 @@ public class SpringBootCucumberTestDefinitions {
             RestAssured.baseURI = BASE_URL;
             RequestSpecification request = RestAssured.given();
             JSONObject requestBody = new JSONObject();
-            requestBody.put("email", "email@email.com");
+            requestBody.put("email", "email12@email.com");
             requestBody.put("password", "password");
             request.header("Content-Type", "application/json");
             response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/register");
@@ -65,7 +65,7 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("email", uniqueEmail);
         requestBody.put("password", uniquePassword);
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port"/auth/login");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
     }
 
     @Then("the user can see the homepage")
