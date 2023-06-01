@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 
 @RestController
@@ -50,7 +54,7 @@ public class SecurityController {
     public ResponseEntity<?> registerUser(@RequestBody User userObject){
         if(!userRepository.existsByEmail(userObject.getEmail())){
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
-            UserProfile defaultProfile = new UserProfile("You will need to create a username!", "You will need to create a tagline!", "https://png.pngitem.com/pimgs/s/111-1114675_user-login-person-man-enter-person-login-icon.png");
+            UserProfile defaultProfile = new UserProfile();
             userProfileRepository.save(defaultProfile);
             userObject.setUserProfile(defaultProfile);
             User newUser = userRepository.save(userObject);
@@ -75,4 +79,7 @@ public class SecurityController {
             return ResponseEntity.ok(new LoginResponse("Error: username or password is incorrect"));
         }
     }
+
+
+
 }

@@ -57,8 +57,8 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("the registered user logs in with their email address and password")
     public void theRegisteredUserLogsInWithTheirEmailAddressAndPassword() throws JSONException {
-        String uniqueEmail = "email@email.com";
-        String uniquePassword = "password";
+        String uniqueEmail = "email999@email.com";
+        String uniquePassword = "password999";
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
@@ -70,5 +70,6 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("the user can see the homepage")
     public void theUserCanSeeTheHomepage() {
+        Assert.assertEquals(200, response.getStatusCode());
     }
 }
