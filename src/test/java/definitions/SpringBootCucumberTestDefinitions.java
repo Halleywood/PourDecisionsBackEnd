@@ -1,6 +1,7 @@
 package definitions;
 
 import com.sei.capstone.CapstoneApplication;
+import com.sei.capstone.model.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -42,7 +43,7 @@ public class SpringBootCucumberTestDefinitions {
             requestBody.put("password", "password");
             request.header("Content-Type", "application/json");
             response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/register");
-            Assert.assertEquals(200, response.statusCode());
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +51,8 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("the user is added")
     public void theUserIsAdded() {
-        
+        Assert.assertEquals(201, response.statusCode());
+        Assert.assertNotNull(response.getBody().as(User.class));
     }
 
     @When("the registered user logs in with their email address and password")

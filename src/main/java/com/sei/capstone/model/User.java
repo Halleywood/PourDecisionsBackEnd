@@ -1,5 +1,6 @@
 package com.sei.capstone.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -25,6 +26,7 @@ public class User {
      * Only one user to one profile!
      */
     @OneToOne(mappedBy = "user")
+    @JsonIgnore
     private UserProfile userProfile;
 
     public UserProfile getUserProfile() {
