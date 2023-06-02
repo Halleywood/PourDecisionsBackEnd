@@ -99,7 +99,7 @@ public class SpringBootCucumberTestDefinitions {
     @Given("an authenticated user")
     public void anAuthenticatedUser() {
        try{
-           String JWT = authenticatedJWT();
+           JWT = authenticatedJWT();
             Assert.assertNotNull(JWT);
        } catch (JSONException e) {
            throw new RuntimeException(e);
