@@ -163,5 +163,7 @@ public class SpringBootCucumberTestDefinitions {
     }
 
 
-
+    @When("a user updates their UserProfile")
+    public void aUserUpdatesTheirUserProfile() {
+    }
 }
