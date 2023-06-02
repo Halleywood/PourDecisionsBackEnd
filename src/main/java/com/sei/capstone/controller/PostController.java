@@ -41,6 +41,11 @@ public class PostController {
         return postRepo.findAllByWineId(wineId);
     }
 
+//    @GetMapping("/posts/{profileId}")
+//    public List<Post> getPostsOfAUser(@PathVariable Long profileId){
+//        return postRepo.findPostsByUserProfile(profileId);
+//    }
+
 //    @GetMapping("/posts")
 //    public List<Post> getAllPostsFromUser(){
 //        //get profile id form logged in...display list.

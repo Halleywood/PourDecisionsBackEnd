@@ -21,7 +21,10 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import io.restassured.response.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.SQLOutput;
 import java.util.*;
@@ -211,10 +214,25 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("user searches for posts about a wine")
     public void userSearchesForPostsAboutAWine() {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
-        response = request.get(BASE_URL + port + "/posts/1");
+        HttpHeaders authenticationHeader = new HttpHeaders();
+        authenticationHeader.set("Authorization","Bearer "+ JWT);
+        HttpEntity<String> httpEntity = new HttpEntity<>(authenticationHeader);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL+ port+ "/api/posts/1", HttpMethod.GET, httpEntity, String.class);
+        List<Map<String, String>> posts = JsonPath.from(String.valueOf(response.getBody())).get();
+        Assert.assertTrue(posts.size() > 0);
+    }
+
+    @Then("user should see a list of posts about a wine")
+    public void userShouldSeeAListOfPostsAboutAWine() {
         Assert.assertEquals(200, response.getStatusCode());
+    }
+
+    @When("a user searches for posts written by a specific user")
+    public void aUserSearchesForPostsWrittenByASpecificUser() {
+        
+    }
+
+    @Then("a user should see a list of posts from one user")
+    public void aUserShouldSeeAListOfPostsFromOneUser() {
     }
 }

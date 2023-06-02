@@ -271,7 +271,7 @@ public class SeedData implements CommandLineRunner {
         post3.setTastingNotes("I expected a bigger flavor and pallet from this, it fell flat to me");
         post3.setRating(5);
         post3.setImgSrc("https://img.freepik.com/free-photo/smell-wine_1098-15584.jpg");
-        post3.setWine(wine);
+        post3.setWine(wine2);
         post3.setUserProfile(userProfile2);
         postRepository.save(post3);
 

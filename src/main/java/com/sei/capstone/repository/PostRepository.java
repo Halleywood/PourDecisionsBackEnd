@@ -9,4 +9,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByWineId(@Param("wineId") Long wineId);
+
+    List<Post> findPostsByUserProfile(@Param("profileId") Long profileId);
 }

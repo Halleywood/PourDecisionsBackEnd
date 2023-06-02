@@ -28,8 +28,9 @@ public class Post {
     /**
      * many posts belong to one userprofile
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userProfile_id")
+    @JsonIgnore
     private UserProfile userProfile;
 
     public UserProfile getUserProfile() {
@@ -43,9 +44,9 @@ public class Post {
     /**
      * many posts belong to one wine
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="wine_id")
-
+    @JsonIgnore
     private Wine wine;
 
     public Wine getWine() {
