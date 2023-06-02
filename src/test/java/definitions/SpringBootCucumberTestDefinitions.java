@@ -1,7 +1,9 @@
 package definitions;
 
 import com.sei.capstone.CapstoneApplication;
+import com.sei.capstone.exceptions.InformationNotFoundException;
 import com.sei.capstone.model.User;
+import com.sei.capstone.model.Wine;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,11 +13,14 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import io.restassured.response.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+
+import java.util.*;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes= CapstoneApplication.class)
@@ -29,6 +34,7 @@ public class SpringBootCucumberTestDefinitions {
 
     String JWT;
     private static Response response;
+
 
     /**
      * Generates a JWT token to pass in header of requests.
@@ -105,7 +111,6 @@ public class SpringBootCucumberTestDefinitions {
            throw new RuntimeException(e);
        }
     }
-
     @When("user searches for all wines")
     public void userSearchesForAllWines() {
         RestAssured.baseURI = BASE_URL + port;
@@ -117,15 +122,35 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("they should see a list of wines")
     public void theyShouldSeeAListOfWines() {
-
+        Assert.assertNotNull(response.getBody());
+    }
+    @When("the list of wines is empty")
+    public void theListOfWinesIsEmpty() {
+        List<Wine> emptyWineList = new LinkedList<>();
+        Assertions.assertThrows(InformationNotFoundException.class, () -> {
+            if (emptyWineList.isEmpty()) {
+                throw new InformationNotFoundException("Wine list is empty");
+            }
+        });
+    }
+    @Then("an exception error should be thrown")
+    public void anExceptionErrorShouldBeThrown() {
     }
 
     @When("a user searches for a single wine")
     public void aUserSearchesForASingleWine() {
+        RestAssured.baseURI = BASE_URL + port;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        response = request.get("/api/wine/{id}");
+
 
     }
 
     @Then("they should see details about that wine")
     public void theyShouldSeeDetailsAboutThatWine() {
     }
+
+
+
 }
