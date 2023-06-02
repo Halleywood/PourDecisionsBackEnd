@@ -28,7 +28,7 @@ public class UserController {
 
 
     /**
-     * Retrieves the current logged-in user.
+     * Retrieves the current logged-in user profile.
      * @return the User instance representing the current logged-in user.
      */
     public static UserProfile getCurrentLoggedInUser() {

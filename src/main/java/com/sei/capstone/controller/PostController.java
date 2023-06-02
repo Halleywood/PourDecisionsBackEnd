@@ -1,5 +1,6 @@
 package com.sei.capstone.controller;
 
+import com.sei.capstone.model.Post;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.repository.PostRepository;
 import com.sei.capstone.repository.UserProfileRepository;
@@ -7,8 +8,9 @@ import com.sei.capstone.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -26,7 +28,7 @@ public class PostController {
     }
 
     /**
-     * Retrieves the current logged-in user.
+     * Retrieves the current logged-in user profile.
      * @return the User instance representing the current logged-in user.
      */
     public static UserProfile getCurrentLoggedInUser() {
@@ -34,10 +36,28 @@ public class PostController {
         return userDetails.getUser().getUserProfile();
     }
 
+//    @GetMapping("/posts/{wineId}")
+//    public List<Post> getPostsForWine(@PathVariable Long wineId){
+//        //get all posts about a wine
+//    }
 
-    //GET ALL POSTS FOR A USER
-    //GET ALL POSTS FOR A WINE
-    //CREATE POST
-    //UPDATE POST
-    //DELETE POST
+//    @GetMapping("/posts")
+//    public List<Post> getAllPostsFromUser(){
+//        //get profile id form logged in...display list.
+//    }
+
+//    @PostMapping("/post/{wineId}")
+//    public Post createAPost(){
+//        //need userId and wineID.
+//    }
+
+//    @PutMapping("/post/{postId}")
+//    public Post updateAPost(){
+//        //can get wine id from post...and user id must match who wrote it...
+//    }
+//    @DeleteMapping("/post/{postId}")
+//    public Post deleteAPost(){
+//        //must be the person who wrote it!
+//    }
+
 }
