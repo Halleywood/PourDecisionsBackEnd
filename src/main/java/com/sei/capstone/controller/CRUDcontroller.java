@@ -23,7 +23,7 @@ public class CRUDcontroller {
     private WineRepository wineRepo;
     private UserProfileRepository profileRepo;
 
-    private CRUDcontroller(UserRepository userRepo, WineRepository wineRepo, UserProfileRepository profileRepo){
+    private CRUDcontroller(UserRepository userRepo, WineRepository wineRepo, UserProfileRepository profileRepo) {
         this.userRepo = userRepo;
         this.wineRepo = wineRepo;
         this.profileRepo = profileRepo;
@@ -42,48 +42,62 @@ public class CRUDcontroller {
 
 
     @GetMapping("/wines")
-    public List<Wine> getAllWines(){
-        if(wineRepo.findAll().size() > 0){
+    public List<Wine> getAllWines() {
+        if (wineRepo.findAll().size() > 0) {
             return wineRepo.findAll();
-        }
-        else{
+        } else {
             throw new InformationNotFoundException("This wine list is empty");
         }
     }
 
-    @GetMapping(path="/wine/{wineId}")
-    public Wine getOneWine(@PathVariable Long wineId){
+    @GetMapping(path = "/wine/{wineId}")
+    public Wine getOneWine(@PathVariable Long wineId) {
         Optional<Wine> wine = wineRepo.findById(wineId);
-        if(wine.isEmpty()){
-            throw new InformationNotFoundException("No wine with id of "+ wineId + "exists! Please check your search and try again");
-        }
-        else{
+        if (wine.isEmpty()) {
+            throw new InformationNotFoundException("No wine with id of " + wineId + "exists! Please check your search and try again");
+        } else {
             return wine.get();
         }
     }
+
     /**
      * VIEW A USER PROFILE
      */
     @GetMapping("/profile/{userProfileId}")
-    public UserProfile getOneProfile(@PathVariable Long userProfileId){
+    public UserProfile getOneProfile(@PathVariable Long userProfileId) {
         Optional<UserProfile> profile = profileRepo.findById(userProfileId);
-        if(profile.isPresent()){
+        if (profile.isPresent()) {
             return profile.get();
-        }
-        else{
+        } else {
             throw new InformationNotFoundException("There is no User Profile with id " + userProfileId);
         }
     }
 
     /**
      * UPDATE A USER PROFILE.
-     * @param UserProfileId
+     *
+     * @param userProfileId
      * @param profileObject
      * @return
      */
-//    @PutMapping("/profile/{userProfileId}")
-//    public UserProfile updateUserProfile(@PathVariable Long UserProfileId, @RequestBody UserProfile profileObject){
-//        //need to check logged in user is the same as the profile id...
-//    }
+    @PutMapping("/profile/{userProfileId}")
+    public UserProfile updateUserProfile(@PathVariable Long userProfileId, @RequestBody UserProfile profileObject) {
+        if (getCurrentLoggedInUser().getId() == userProfileId) {
+            UserProfile profileToUpdate = getOneProfile(userProfileId);
+            if (profileObject.getUserName() != null) {
+                profileToUpdate.setUserName(profileObject.getUserName());
+            }
+            if (profileObject.getTagline() != null) {
+                profileToUpdate.setTagline(profileObject.getTagline());
+            }
+            if (profileObject.getImgSrc() != null) {
+                profileToUpdate.setImgSrc(profileObject.getImgSrc());
+            }
+            profileRepo.save(profileToUpdate);
+            return profileToUpdate;
+        } else {
+            throw new RuntimeException("YOU CANNOT UPDATE ANOTHER USER'S PROFILE");
+        }
+    }
 
 }

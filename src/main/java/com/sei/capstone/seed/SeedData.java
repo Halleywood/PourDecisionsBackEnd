@@ -44,55 +44,60 @@ public class SeedData implements CommandLineRunner {
         user.setId(1L);
         user.setEmail("suresh@ga.com");
         user.setPassword(encoder.encode("suresh"));
+        userRepository.save(user);
         UserProfile userProfile = new UserProfile();
         userProfile.setId(1L);
         userProfile.setUserName("Suresh");
         userProfile.setTagline("I'm not wine-ing, I'm just expressing my grape expectations");
         userProfile.setImgSrc("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwwvTaE5LXDzLVEMnRNmPdJ_sYdSTdhWVuNYycmRaQeQ&usqp=CAU&ec=48600112");
-        profileRepository.save(userProfile);
         userProfile.setUser(user);
+        profileRepository.save(userProfile);
         user.setUserProfile(userProfile);
-        userRepository.save(user);
+
         User user2 = new User();
         user2.setId(2L);
         user2.setEmail("kelsey@ga.com");
         user2.setPassword(encoder.encode("kelsey"));
+        userRepository.save(user2);
         UserProfile userProfile2 = new UserProfile("Kelso", "I'm vine and dandy, thanks for asking", "https://t4.ftcdn.net/jpg/05/33/97/31/360_F_533973132_DYTYD0n2Qx0oeQTxNZOSCUNkFsfwNNhN.jpg");
         userProfile2.setId(2L);
-        profileRepository.save(userProfile2);
         userProfile2.setUser(user2);
+        profileRepository.save(userProfile2);
         user2.setUserProfile(userProfile2);
-        userRepository.save(user2);
+
         User user3 = new User();
         user3.setId(3L);
         user3.setEmail("john@ga.com");
         user3.setPassword(encoder.encode("john"));
+        userRepository.save(user3);
         UserProfile userProfile3 = new UserProfile("John", "I'm aging like a fine wine, getting better with time", "https://media.istockphoto.com/id/1330285227/vector/male-avatar-icon.jpg?s=612x612&w=0&k=20&c=KFUDN9KXhdg7o2UENX-02Z9pXoU25zcOMT_hHTE4qvU=");
         userProfile3.setId(3L);
-        profileRepository.save(userProfile3);
         userProfile3.setUser(user3);
+        profileRepository.save(userProfile3);
         user3.setUserProfile(userProfile3);
-        userRepository.save(user3);
+
         User user4 = new User();
         user4.setId(4L);
         user4.setEmail("kenny@ga.com");
         user4.setPassword(encoder.encode("kenny"));
+        userRepository.save(user4);
         UserProfile userProfile4 = new UserProfile("Kenny G", "It's time to wine down and relax", "https://img.freepik.com/premium-vector/icon-man-s-face-with-light-skin_238404-1006.jpg");
         userProfile4.setId(4L);
-        profileRepository.save(userProfile4);
         userProfile4.setUser(user4);
+        profileRepository.save(userProfile4);
         user4.setUserProfile(userProfile4);
-        userRepository.save(user4);
+
         User user5 = new User();
         user5.setId(5L);
         user5.setEmail("alice@ga.com");
         user5.setPassword(encoder.encode("alice"));
+        userRepository.save(user5);
         UserProfile userProfile5 = new UserProfile("Alice", "I'm grapeful for good company", "https://www.shutterstock.com/image-vector/faceless-woman-face-icon-female-260nw-2263344341.jpg");
         userProfile5.setId(5L);
-        profileRepository.save(userProfile5);
         userProfile5.setUser(user5);
+        profileRepository.save(userProfile5);
         user5.setUserProfile(userProfile5);
-        userRepository.save(user5);
+
         System.out.println("Users created successfully!");
     }
 

@@ -204,7 +204,8 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("username", "kelsoooo");
         requestBody.put("tagline", "this is my tagline");
         requestBody.put("imgSrc", "new image source url");
-        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/profiles/1");
+        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/profile/2");
         Assert.assertEquals(200, response.statusCode());
+        System.out.println(response.peek());
     }
 }
