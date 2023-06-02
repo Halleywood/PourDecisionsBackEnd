@@ -5,6 +5,7 @@ import com.sei.capstone.model.Post;
 import com.sei.capstone.model.User;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.model.Wine;
+import com.sei.capstone.repository.PostRepository;
 import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.repository.WineRepository;
@@ -20,26 +21,26 @@ public class SeedData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final UserProfileRepository profileRepository;
     private final WineRepository wineRepository;
-//NEED TO ADD AND SAVE WINE AND POSTS TO THEIR OWN REPOS WHEN YOU GET THERE!
+    private final PostRepository postRepository;
+
 
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
-    public SeedData(UserRepository userRepository, UserProfileRepository profileRepository, WineRepository wineRepository) {
+    public SeedData(UserRepository userRepository, UserProfileRepository profileRepository, WineRepository wineRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.wineRepository = wineRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        createUsers();
-        createWines();
-        //createPosts();
+        createData();
     }
 
-    private void createUsers() {
+    private void createData() {
         User user = new User();
         user.setId(1L);
         user.setEmail("suresh@ga.com");
@@ -99,9 +100,7 @@ public class SeedData implements CommandLineRunner {
         user5.setUserProfile(userProfile5);
 
         System.out.println("Users created successfully!");
-    }
 
-    private void createWines(){
         Wine wine = new Wine();
         wine.setId(1L);
         wine.setName("Cabernet Sauvignon");
@@ -115,6 +114,7 @@ public class SeedData implements CommandLineRunner {
         wine.setPairing("Grilled steak, roasted lamb, aged cheddar.");
         wine.setImgSrc("https://potomacwines.com/image/cache/catalog/Red%206/CSM_cab-800x1000.jpg");
         wineRepository.save(wine);
+
         Wine wine2 = new Wine();
         wine2.setId(2L);
         wine2.setName("Chardonnay");
@@ -128,6 +128,7 @@ public class SeedData implements CommandLineRunner {
         wine2.setPairing("Grilled seafood, roasted chicken, creamy pasta dishes.");
         wine2.setImgSrc("https://www.brixwineandliquor.com/wp-content/uploads/2020/04/Kendall-Jackson-Vintners-Reserve-Chardonnay201-1.jpg");
         wineRepository.save(wine2);
+
         Wine wine3 = new Wine();
         wine3.setId(3L);
         wine3.setName("Michelle");
@@ -141,6 +142,7 @@ public class SeedData implements CommandLineRunner {
         wine3.setPairing("Roasted duck, grilled salmon, mushroom risotto.");
         wine3.setImgSrc("https://cdn.shoplightspeed.com/shops/609238/files/5374896/meiomi-pinot-noir-2019-abv-137-750-ml.jpg");
         wineRepository.save(wine3);
+
         Wine wine4 = new Wine();
         wine4.setId(4L);
         wine4.setName("Bay's Blanc");
@@ -154,6 +156,7 @@ public class SeedData implements CommandLineRunner {
         wine4.setPairing("Goat cheese, grilled asparagus, seafood salads.");
         wine4.setImgSrc("https://i0.wp.com/www.gordonswine.com/wp-content/uploads/product_images/product-15964-1677480158-2593.jpg?fit=600%2C600&ssl=1");
         wineRepository.save(wine4);
+
         Wine wine5 = new Wine();
         wine5.setId(5L);
         wine5.setName("Crest Grand Estates");
@@ -167,6 +170,7 @@ public class SeedData implements CommandLineRunner {
         wine5.setPairing("Roasted pork, grilled vegetables, tomato-based pasta dishes.");
         wine5.setImgSrc("https://www.b-21.com/labels/live/USCCME19BE.jpg");
         wineRepository.save(wine5);
+
         Wine wine6 = new Wine();
         wine6.setId(6L);
         wine6.setName("Chateau Cab");
@@ -180,6 +184,7 @@ public class SeedData implements CommandLineRunner {
         wine6.setPairing("Grilled steak, roasted lamb, aged cheddar.");
         wine6.setImgSrc("https://potomacwines.com/image/cache/catalog/Red%206/CSM_cab-800x1000.jpg");
         wineRepository.save(wine6);
+
         Wine wine7 = new Wine();
         wine7.setId(7L);
         wine7.setName("Château Miraval Rosé");
@@ -193,6 +198,7 @@ public class SeedData implements CommandLineRunner {
         wine7.setPairing("Grilled seafood, salads, light appetizers.");
         wine7.setImgSrc("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt0il2w7Vzy6tK_kyHjAWuXGCHCuLII_lfTNEP7zqTkqQ3-usQnP-sR3Pk99s_gCTd-Y7gBuOcJGc&usqp=CAU&ec=48600112");
         wineRepository.save(wine7);
+
         Wine wine8 = new Wine();
         wine8.setId(8L);
         wine8.setName("The Prisoner");
@@ -206,6 +212,7 @@ public class SeedData implements CommandLineRunner {
         wine8.setPairing("Grilled steak, braised lamb, strong cheeses.");
         wine8.setImgSrc("https://bremerswineandliquor.com/wp-content/uploads/2018/06/the-prisoner.png");
         wineRepository.save(wine8);
+
         Wine wine9 = new Wine();
         wine9.setId(9L);
         wine9.setName("Whispering Angel Rosé");
@@ -219,6 +226,7 @@ public class SeedData implements CommandLineRunner {
         wine9.setPairing("Grilled seafood, salads, light appetizers.");
         wine9.setImgSrc("https://cdn.shopify.com/s/files/1/0848/5288/products/chateau-desclans-whispering-angel-rose-2019---750ml-26178125_e82814be-0561-40c5-98d0-a7a059aaf642.jpg?v=1591104369");
         wineRepository.save(wine9);
+
         Wine wine10 = new Wine();
         wine10.setId(10L);
         wine10.setName("Apothic Red");
@@ -232,22 +240,59 @@ public class SeedData implements CommandLineRunner {
         wine10.setPairing("Grilled meats, hearty stews, dark chocolate.");
         wine10.setImgSrc("https://isteam.wsimg.com/ip/14ef5299-ed5b-488b-9594-00fe33123a47/ols/83635_original/:/rs=w:600,h:600");
         wineRepository.save(wine10);
-        System.out.println("Wines created successfully!");
-    }
 
-    private void createPosts(){
+        System.out.println("Wines created successfully!");
+        //create post
         Post post1 = new Post();
         post1.setId(1L);
         post1.setTitle("Decadent!");
         post1.setTastingNotes("it was like having dessert with the whole meal, juicy and delicious. I appreciate the bold red fruit flavor");
         post1.setRating(8);
         post1.setImgSrc("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQBoCFI1HW8g8oAjTCoVkaklI3IwDXrLFBMd9b-19BWg&usqp=CAU&ec=48600112");
+        //set wine to post
+        post1.setWine(wine);
+        //set userProfile
+        post1.setUserProfile(userProfile);
+        postRepository.save(post1);
+
         Post post2 = new Post();
         post2.setId(2L);
         post2.setTitle("Meh");
         post2.setTastingNotes("It tasted a little too much like earth and dirt and less like fruit");
         post2.setRating(4);
         post2.setImgSrc("https://sonomawinegarden.com/wp-content/uploads/2022/09/More-About-Telling-If-a-Wine-Is-Bad.jpg");
+        post2.setWine(wine);
+        post2.setUserProfile(userProfile);
+        postRepository.save(post2);
+
+        Post post3 = new Post();
+        post3.setId(3L);
+        post3.setTitle("So so");
+        post3.setTastingNotes("I expected a bigger flavor and pallet from this, it fell flat to me");
+        post3.setRating(5);
+        post3.setImgSrc("https://img.freepik.com/free-photo/smell-wine_1098-15584.jpg");
+        post3.setWine(wine);
+        post3.setUserProfile(userProfile2);
+        postRepository.save(post3);
+
+
         System.out.println("Posts have been created!");
+
+        //SET THE POSTS TO A LIST TO THE USER PROFILE
+        List<Post> userProfile1posts = new ArrayList<>();
+        userProfile1posts.add(post1);
+        userProfile1posts.add(post2);
+        userProfile.setUserPosts(userProfile1posts);
+
+        List<Post> userProfile2posts = new ArrayList<>();
+        userProfile2posts.add(post3);
+        userProfile2.setUserPosts(userProfile2posts);
+
+        //SET THE POSTS TO A LIST TO THE WINE
+        List<Post> wine1posts = new ArrayList<>();
+        wine1posts.add(post1);
+        wine1posts.add(post2);
+        wine1posts.add(post3);
+        wine.setPostsAboutThisWine(wine1posts);
     }
 }

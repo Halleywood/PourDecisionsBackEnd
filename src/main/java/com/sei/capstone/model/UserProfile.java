@@ -1,5 +1,6 @@
 package com.sei.capstone.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -45,7 +46,7 @@ public class UserProfile {
      * a UserProfile can have many posts about the wines they've tried.
      */
     @OneToMany(mappedBy = "userProfile")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Post> userPosts;
 
     public List<Post> getUserPosts() {

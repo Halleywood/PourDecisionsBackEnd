@@ -36,10 +36,10 @@ public class PostController {
         return userDetails.getUser().getUserProfile();
     }
 
-//    @GetMapping("/posts/{wineId}")
-//    public List<Post> getPostsForWine(@PathVariable Long wineId){
-//        //get all posts about a wine
-//    }
+    @GetMapping("/posts/{wineId}")
+    public List<Post> getPostsForWine(@PathVariable Long wineId){
+        return postRepo.findAllByWineId(wineId);
+    }
 
 //    @GetMapping("/posts")
 //    public List<Post> getAllPostsFromUser(){

@@ -1,6 +1,7 @@
 package com.sei.capstone.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -42,8 +43,9 @@ public class Post {
     /**
      * many posts belong to one wine
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="wine_id")
+
     private Wine wine;
 
     public Wine getWine() {

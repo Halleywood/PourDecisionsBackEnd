@@ -208,4 +208,13 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.statusCode());
         System.out.println(response.peek());
     }
+
+    @When("user searches for posts about a wine")
+    public void userSearchesForPostsAboutAWine() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        response = request.get(BASE_URL + port + "/posts/1");
+        Assert.assertEquals(200, response.getStatusCode());
+    }
 }
