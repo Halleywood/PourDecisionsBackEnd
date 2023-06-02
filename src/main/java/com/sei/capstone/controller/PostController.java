@@ -1,8 +1,11 @@
 package com.sei.capstone.controller;
 
+import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.repository.PostRepository;
 import com.sei.capstone.repository.UserProfileRepository;
+import com.sei.capstone.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,15 @@ public class PostController {
     public PostController(PostRepository postRepo, UserProfileRepository userProfileRepo ){
         this.postRepo = postRepo;
         this.userProfileRepo = userProfileRepo;
+    }
+
+    /**
+     * Retrieves the current logged-in user.
+     * @return the User instance representing the current logged-in user.
+     */
+    public static UserProfile getCurrentLoggedInUser() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser().getUserProfile();
     }
 
 
