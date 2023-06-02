@@ -3,3 +3,5 @@ Feature: User can update/Delete their profile
     Given an authenticated user
     When a user updates their UserProfile
     Then their UserProfile is updated
+    When a user searches for their posts
+    Then they should see a list of their posts

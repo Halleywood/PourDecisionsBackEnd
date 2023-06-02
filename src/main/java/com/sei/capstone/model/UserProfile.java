@@ -45,7 +45,7 @@ public class UserProfile {
     /**
      * a UserProfile can have many posts about the wines they've tried.
      */
-    @OneToMany(mappedBy = "userProfile")
+    @OneToMany(mappedBy = "userProfile", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Post> userPosts;
 

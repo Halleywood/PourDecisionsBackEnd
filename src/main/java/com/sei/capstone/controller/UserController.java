@@ -93,4 +93,9 @@ public class UserController {
             }
         }
     }
+
+    @GetMapping("/profile/posts")
+    public List<Post> getAllPostsFromUser() {
+        return getCurrentLoggedInUser().getUserPosts();
+    }
 }

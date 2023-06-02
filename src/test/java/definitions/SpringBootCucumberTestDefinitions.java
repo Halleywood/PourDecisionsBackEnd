@@ -11,7 +11,6 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -26,7 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.SQLOutput;
+
 import java.util.*;
 
 @CucumberContextConfiguration
@@ -39,7 +38,9 @@ public class SpringBootCucumberTestDefinitions {
     @LocalServerPort
     String port;
 
+    //stores the method autheticatedJWT() as a variable to be passed in headers for all autheticated user tests.
     String JWT;
+
     private static Response response;
 
 
@@ -111,7 +112,7 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     /**
-     * CRUDCalls STEP DEFINITIONS
+     * CRUD CALLS STEP DEFINITIONS
      */
     @Given("an authenticated user")
     public void anAuthenticatedUser() {
@@ -182,6 +183,9 @@ public class SpringBootCucumberTestDefinitions {
         }
     }
 
+    /**
+     * USER CRUD FEATURES
+     */
     @When("a user updates their UserProfile")
     public void aUserUpdatesTheirUserProfile() {
         try{
@@ -207,9 +211,25 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("imgSrc", "new image source url");
         response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/profile/2");
         Assert.assertEquals(200, response.statusCode());
-        System.out.println(response.peek());
     }
 
+    @When("a user searches for their posts")
+    public void aUserSearchesForTheirPosts() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        response = request.get(BASE_URL + port + "/api/profile/posts");
+        Assert.assertEquals(200, response.getStatusCode());
+
+    }
+
+    @Then("they should see a list of their posts")
+    public void theyShouldSeeAListOfTheirPosts() {
+        Assert.assertNotNull(response);
+    }
+    /**
+     * POST FEATURES
+     */
     @When("user searches for posts about a wine")
     public void userSearchesForPostsAboutAWine() {
         HttpHeaders authenticationHeader = new HttpHeaders();
@@ -224,7 +244,6 @@ public class SpringBootCucumberTestDefinitions {
     public void userShouldSeeAListOfPostsAboutAWine() {
         Assert.assertEquals(200, response.getStatusCode());
     }
-
     @When("a user searches for posts written by a specific user")
     public void aUserSearchesForPostsWrittenByASpecificUser() {
         HttpHeaders authenticationHeader = new HttpHeaders();
@@ -246,5 +265,7 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("a post about a wine is created")
     public void aPostAboutAWineIsCreated() {
+
     }
-}
+
+

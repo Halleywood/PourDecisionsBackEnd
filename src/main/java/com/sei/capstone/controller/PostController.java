@@ -43,11 +43,6 @@ public class PostController {
 
 
 
-//    @GetMapping("/posts")
-//    public List<Post> getAllPostsFromUser(){
-//        //get profile id form logged in...display list.
-//    }
-
 //    @PostMapping("/post/{wineId}")
 //    public Post createAPost(){
 //        //need userId and wineID.
