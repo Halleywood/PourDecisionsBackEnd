@@ -142,9 +142,8 @@ public class SpringBootCucumberTestDefinitions {
         RestAssured.baseURI = BASE_URL + port;
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer "+ JWT);
-        response = request.get("/api/wine/{id}");
-
-
+        response = request.get("/api/wine/1");
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Then("they should see details about that wine")
