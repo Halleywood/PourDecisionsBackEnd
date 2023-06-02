@@ -95,6 +95,7 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("an authenticated user")
     public void anAuthenticatedUser() {
+        efew
     }
 
     @When("user searches for all wines")
