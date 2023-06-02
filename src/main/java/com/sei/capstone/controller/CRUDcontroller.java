@@ -3,15 +3,13 @@ package com.sei.capstone.controller;
 import com.sei.capstone.exceptions.InformationNotFoundException;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.model.Wine;
+import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.repository.WineRepository;
 import com.sei.capstone.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +21,12 @@ public class CRUDcontroller {
     @Autowired
     private UserRepository userRepo;
     private WineRepository wineRepo;
+    private UserProfileRepository profileRepo;
 
-    private CRUDcontroller(UserRepository userRepo, WineRepository wineRepo){
+    private CRUDcontroller(UserRepository userRepo, WineRepository wineRepo, UserProfileRepository profileRepo){
         this.userRepo = userRepo;
         this.wineRepo = wineRepo;
+        this.profileRepo = profileRepo;
     }
 
 
@@ -61,6 +61,29 @@ public class CRUDcontroller {
             return wine.get();
         }
     }
+    /**
+     * VIEW A USER PROFILE
+     */
+    @GetMapping("/profile/{userProfileId}")
+    public UserProfile getOneProfile(@PathVariable Long userProfileId){
+        Optional<UserProfile> profile = profileRepo.findById(userProfileId);
+        if(profile.isPresent()){
+            return profile.get();
+        }
+        else{
+            throw new InformationNotFoundException("There is no User Profile with id " + userProfileId);
+        }
+    }
 
+    /**
+     * UPDATE A USER PROFILE.
+     * @param UserProfileId
+     * @param profileObject
+     * @return
+     */
+//    @PutMapping("/profile/{userProfileId}")
+//    public UserProfile updateUserProfile(@PathVariable Long UserProfileId, @RequestBody UserProfile profileObject){
+//        //need to check logged in user is the same as the profile id...
+//    }
 
 }

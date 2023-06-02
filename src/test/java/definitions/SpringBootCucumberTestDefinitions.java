@@ -21,6 +21,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import io.restassured.response.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.sql.SQLOutput;
 import java.util.*;
@@ -86,15 +87,19 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("the registered user logs in with their email address and password")
     public void theRegisteredUserLogsInWithTheirEmailAddressAndPassword() throws JSONException {
-        String uniqueEmail = "email999@email.com";
-        String uniquePassword = "password999";
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("email", uniqueEmail);
-        requestBody.put("password", uniquePassword);
-        request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
+        try {
+            String uniqueEmail = "email999@email.com";
+            String uniquePassword = "password999";
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("email", uniqueEmail);
+            requestBody.put("password", uniquePassword);
+            request.header("Content-Type", "application/json");
+            response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
+        } catch(HttpClientErrorException e){
+            e.printStackTrace();
+        }
     }
 
     @Then("the user can see the homepage")
@@ -116,11 +121,15 @@ public class SpringBootCucumberTestDefinitions {
     }
     @When("user searches for all wines")
     public void userSearchesForAllWines() {
-        RestAssured.baseURI = BASE_URL + port;
-        RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
-        response = request.get("/api/wines");
-        Assert.assertEquals(200, response.getStatusCode());
+      try{
+          RestAssured.baseURI = BASE_URL + port;
+          RequestSpecification request = RestAssured.given();
+          request.header("Authorization", "Bearer "+ JWT);
+          response = request.get("/api/wines");
+          Assert.assertEquals(200, response.getStatusCode());
+      } catch(HttpClientErrorException e){
+          e.printStackTrace();
+      }
     }
 
     @Then("they should see a list of wines")
@@ -142,15 +151,20 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("a user searches for a single wine")
     public void aUserSearchesForASingleWine() {
+        try{
         RestAssured.baseURI = BASE_URL + port;
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer "+ JWT);
-        response = request.get("/api/wine/1");
+        response = request.get(BASE_URL + port + "/api/wine/1");
         Assert.assertEquals(200, response.getStatusCode());
+        } catch(HttpClientErrorException e){
+            e.printStackTrace();
+        }
     }
 
     @Then("they should see details about that wine")
     public void theyShouldSeeDetailsAboutThatWine() {
+        try{
         Assert.assertNotNull(response.getBody());
         String responseBody = response.getBody().asString();
         JsonPath jsonPath = JsonPath.from(responseBody);
@@ -160,10 +174,37 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals("1" , id);
         Assert.assertEquals("Cabernet Sauvignon", name);
         Assert.assertEquals("2016", vintage);
+        } catch(HttpClientErrorException e){
+            e.printStackTrace();
+        }
     }
 
 
     @When("a user updates their UserProfile")
     public void aUserUpdatesTheirUserProfile() {
+        try{
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        response = request.get(BASE_URL + port + "/api/profile/1");
+        Assert.assertNotNull(response);
+        //check that current logged in user id is same???
+        } catch(HttpClientErrorException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Then("their UserProfile is updated")
+    public void theirUserProfileIsUpdated() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        request.header("Content-Type", "application/json");
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("username", "kelsoooo");
+        requestBody.put("tagline", "this is my tagline");
+        requestBody.put("imgSrc", "new image source url");
+        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/profiles/1");
+        Assert.assertEquals(200, response.statusCode());
     }
 }
