@@ -238,4 +238,13 @@ public class SpringBootCucumberTestDefinitions {
     @Then("a user should see a list of posts from one user")
     public void aUserShouldSeeAListOfPostsFromOneUser() {
     }
+
+    @When("a user wants to create a post about a wine")
+    public void aUserWantsToCreateAPostAboutAWine() {
+        
+    }
+
+    @Then("a post about a wine is created")
+    public void aPostAboutAWineIsCreated() {
+    }
 }
