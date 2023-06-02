@@ -1,10 +1,13 @@
 package com.sei.capstone.controller;
 
 import com.sei.capstone.exceptions.InformationNotFoundException;
+import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.model.Wine;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.repository.WineRepository;
+import com.sei.capstone.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,18 @@ public class CRUDcontroller {
         this.wineRepo = wineRepo;
     }
 
+
+    /**
+     * Retrives the current logged-in user.
+     *
+     * @return the User instance representing the current logged-in user.
+     */
+    public static UserProfile getCurrentLoggedInUser() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser().getUserProfile();
+    }
+
+
     @GetMapping("/wines")
     public List<Wine> getAllWines(){
         if(wineRepo.findAll().size() > 0){
@@ -46,4 +61,6 @@ public class CRUDcontroller {
             return wine.get();
         }
     }
+
+
 }
