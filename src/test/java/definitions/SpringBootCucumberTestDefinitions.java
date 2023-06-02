@@ -182,7 +182,6 @@ public class SpringBootCucumberTestDefinitions {
         }
     }
 
-
     @When("a user updates their UserProfile")
     public void aUserUpdatesTheirUserProfile() {
         try{
@@ -191,7 +190,6 @@ public class SpringBootCucumberTestDefinitions {
         request.header("Authorization", "Bearer "+ JWT);
         response = request.get(BASE_URL + port + "/api/profile/1");
         Assert.assertNotNull(response);
-        //check that current logged in user id is same???
         } catch(HttpClientErrorException e){
             e.printStackTrace();
         }
@@ -229,7 +227,12 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("a user searches for posts written by a specific user")
     public void aUserSearchesForPostsWrittenByASpecificUser() {
-        
+        HttpHeaders authenticationHeader = new HttpHeaders();
+        authenticationHeader.set("Authorization","Bearer "+ JWT);
+        HttpEntity<String> httpEntity = new HttpEntity<>(authenticationHeader);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL+ port+ "/api/profile/1/posts", HttpMethod.GET, httpEntity, String.class);
+        List<Map<String, String>> posts = JsonPath.from(String.valueOf(response.getBody())).get();
+        Assert.assertTrue(posts.size() > 0);
     }
 
     @Then("a user should see a list of posts from one user")

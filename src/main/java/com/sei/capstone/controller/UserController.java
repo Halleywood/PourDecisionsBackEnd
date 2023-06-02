@@ -1,6 +1,7 @@
 package com.sei.capstone.controller;
 
 import com.sei.capstone.exceptions.InformationNotFoundException;
+import com.sei.capstone.model.Post;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -73,6 +75,22 @@ public class UserController {
             return profileToUpdate;
         } else {
             throw new RuntimeException("YOU CANNOT UPDATE ANOTHER USER'S PROFILE");
+        }
+    }
+
+    @GetMapping("/profile/{userProfileId}/posts")
+    public List<Post> getPostsOfAUser(@PathVariable Long userProfileId){
+        Optional<UserProfile> checkForProfile = profileRepo.findById(userProfileId);
+        if(checkForProfile.isEmpty()){
+            throw new InformationNotFoundException("No profile with id of "+ userProfileId+ "exists!");
+        }
+        else {
+            List<Post> profilePosts = checkForProfile.get().getUserPosts();
+            if (profilePosts.size() == 0) {
+                throw new InformationNotFoundException("The user with profile id of " + userProfileId + " has no posts yet!");
+            } else {
+                return profilePosts;
+            }
         }
     }
 }
