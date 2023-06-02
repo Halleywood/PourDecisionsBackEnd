@@ -14,6 +14,8 @@ import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import io.restassured.response.Response;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes= CapstoneApplication.class)
@@ -25,6 +27,7 @@ public class SpringBootCucumberTestDefinitions {
     @LocalServerPort
     String port;
 
+    String JWT;
     private static Response response;
 
     /**
@@ -32,7 +35,7 @@ public class SpringBootCucumberTestDefinitions {
      * @return JWT as a String
      * @throws JSONException
      */
-    public String authenticatedUser() throws JSONException {
+    public String authenticatedJWT() throws JSONException {
         RequestSpecification request = RestAssured.given();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", "kelsey@ga.com");
@@ -95,12 +98,21 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("an authenticated user")
     public void anAuthenticatedUser() {
-        efew
+       try{
+           String JWT = authenticatedJWT();
+            Assert.assertNotNull(JWT);
+       } catch (JSONException e) {
+           throw new RuntimeException(e);
+       }
     }
 
     @When("user searches for all wines")
     public void userSearchesForAllWines() {
-
+        RestAssured.baseURI = BASE_URL + port;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer "+ JWT);
+        response = request.get("/api/wines");
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Then("they should see a list of wines")
