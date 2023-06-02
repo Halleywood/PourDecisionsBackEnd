@@ -28,6 +28,7 @@ import java.util.Base64;
 
 @RestController
 @RequestMapping(path="/auth")
+@CrossOrigin
 public class SecurityController {
 
     @Autowired
@@ -78,7 +79,7 @@ public class SecurityController {
 
     @GetMapping(path="/test")
     public String testMethod(){
-        return "HELLOOOO";
+        return "HELLO FROM THE TEST METHOD! 👀";
     }
 
 

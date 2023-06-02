@@ -60,7 +60,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String tastingNotes, Integer rating) {
+    public Post(String title, String tastingNotes, Integer rating, String imgSrc) {
         this.title = title;
         this.tastingNotes = tastingNotes;
         this.rating = rating;

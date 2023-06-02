@@ -11,19 +11,17 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
 
     private MyUserDetailsService myUserDetailsService;
 
@@ -59,25 +57,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @return the configured SecurityFilterChain
      * @throws Exception if an error occurs during configuratoin
      */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/auth/register", "/auth/login", "/auth/test").permitAll()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        http.authorizeRequests().antMatchers(
+                        "/auth/register",
+                        "/auth/login"
+                ).permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .csrf().disable();
-
-        http.formLogin().successHandler((request, response, authentication) -> {
-            response.setContentType("text/plain");
-            response.getWriter().write(authentication.getName()); // Write the access token as a plain string
-        });
-
+                .and().csrf().disable();
         http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
-
 
     /**
      * Creates and returns an instance of AuthenticationManager
@@ -114,5 +106,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
     }
-
 }
+

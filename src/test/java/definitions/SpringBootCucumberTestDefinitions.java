@@ -27,7 +27,24 @@ public class SpringBootCucumberTestDefinitions {
 
     private static Response response;
 
+    /**
+     * Generates a JWT token to pass in header of requests.
+     * @return JWT as a String
+     * @throws JSONException
+     */
+    public String authenticatedUser() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", "kelsey@ga.com");
+        jsonObject.put("password", "kelsey");
+        request.header("Content-Type", "application/json");
+        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/auth/login");
+        return response.jsonPath().getString("message");
+    }
 
+    /**
+     * SECURITY FEATURE TEST DEFINITIONS
+     */
     @Given("a unique email address")
     public void aUniqueEmailAddress() {
         String uniqueEmail = "email@email.com";
@@ -71,5 +88,31 @@ public class SpringBootCucumberTestDefinitions {
     @Then("the user can see the homepage")
     public void theUserCanSeeTheHomepage() {
         Assert.assertEquals(200, response.getStatusCode());
+    }
+
+    /**
+     * CRUDCalls STEP DEFINITIONS
+     */
+    @Given("an authenticated user")
+    public void anAuthenticatedUser() {
+    }
+
+    @When("user searches for all wines")
+    public void userSearchesForAllWines() {
+
+    }
+
+    @Then("they should see a list of wines")
+    public void theyShouldSeeAListOfWines() {
+
+    }
+
+    @When("a user searches for a single wine")
+    public void aUserSearchesForASingleWine() {
+
+    }
+
+    @Then("they should see details about that wine")
+    public void theyShouldSeeDetailsAboutThatWine() {
     }
 }
