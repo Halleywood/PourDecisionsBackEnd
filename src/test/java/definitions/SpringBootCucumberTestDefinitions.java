@@ -9,7 +9,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -20,6 +22,7 @@ import io.restassured.response.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 @CucumberContextConfiguration
@@ -148,6 +151,15 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("they should see details about that wine")
     public void theyShouldSeeDetailsAboutThatWine() {
+        Assert.assertNotNull(response.getBody());
+        String responseBody = response.getBody().asString();
+        JsonPath jsonPath = JsonPath.from(responseBody);
+        String id = jsonPath.getString("id");
+        String name = jsonPath.getString("name");
+        String vintage = jsonPath.getString("vintage");
+        Assert.assertEquals("1" , id);
+        Assert.assertEquals("Cabernet Sauvignon", name);
+        Assert.assertEquals("2016", vintage);
     }
 
 
