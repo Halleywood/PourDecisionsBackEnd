@@ -46,6 +46,7 @@ public class SpringBootCucumberTestDefinitions {
 
     /**
      * Generates a JWT token to pass in header of requests.
+     *
      * @return JWT as a String
      * @throws JSONException
      */
@@ -101,7 +102,7 @@ public class SpringBootCucumberTestDefinitions {
             requestBody.put("password", uniquePassword);
             request.header("Content-Type", "application/json");
             response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
-        } catch(HttpClientErrorException e){
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
     }
@@ -116,30 +117,32 @@ public class SpringBootCucumberTestDefinitions {
      */
     @Given("an authenticated user")
     public void anAuthenticatedUser() {
-       try{
-           JWT = authenticatedJWT();
+        try {
+            JWT = authenticatedJWT();
             Assert.assertNotNull(JWT);
-       } catch (JSONException e) {
-           throw new RuntimeException(e);
-       }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     @When("user searches for all wines")
     public void userSearchesForAllWines() {
-      try{
-          RestAssured.baseURI = BASE_URL + port;
-          RequestSpecification request = RestAssured.given();
-          request.header("Authorization", "Bearer "+ JWT);
-          response = request.get("/api/wines");
-          Assert.assertEquals(200, response.getStatusCode());
-      } catch(HttpClientErrorException e){
-          e.printStackTrace();
-      }
+        try {
+            RestAssured.baseURI = BASE_URL + port;
+            RequestSpecification request = RestAssured.given();
+            request.header("Authorization", "Bearer " + JWT);
+            response = request.get("/api/wines");
+            Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
     }
 
     @Then("they should see a list of wines")
     public void theyShouldSeeAListOfWines() {
         Assert.assertNotNull(response.getBody());
     }
+
     @When("the list of wines is empty")
     public void theListOfWinesIsEmpty() {
         List<Wine> emptyWineList = new LinkedList<>();
@@ -149,36 +152,37 @@ public class SpringBootCucumberTestDefinitions {
             }
         });
     }
+
     @Then("an exception error should be thrown")
     public void anExceptionErrorShouldBeThrown() {
     }
 
     @When("a user searches for a single wine")
     public void aUserSearchesForASingleWine() {
-        try{
-        RestAssured.baseURI = BASE_URL + port;
-        RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
-        response = request.get(BASE_URL + port + "/api/wine/1");
-        Assert.assertEquals(200, response.getStatusCode());
-        } catch(HttpClientErrorException e){
+        try {
+            RestAssured.baseURI = BASE_URL + port;
+            RequestSpecification request = RestAssured.given();
+            request.header("Authorization", "Bearer " + JWT);
+            response = request.get(BASE_URL + port + "/api/wine/1");
+            Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
     }
 
     @Then("they should see details about that wine")
     public void theyShouldSeeDetailsAboutThatWine() {
-        try{
-        Assert.assertNotNull(response.getBody());
-        String responseBody = response.getBody().asString();
-        JsonPath jsonPath = JsonPath.from(responseBody);
-        String id = jsonPath.getString("id");
-        String name = jsonPath.getString("name");
-        String vintage = jsonPath.getString("vintage");
-        Assert.assertEquals("1" , id);
-        Assert.assertEquals("Cabernet Sauvignon", name);
-        Assert.assertEquals("2016", vintage);
-        } catch(HttpClientErrorException e){
+        try {
+            Assert.assertNotNull(response.getBody());
+            String responseBody = response.getBody().asString();
+            JsonPath jsonPath = JsonPath.from(responseBody);
+            String id = jsonPath.getString("id");
+            String name = jsonPath.getString("name");
+            String vintage = jsonPath.getString("vintage");
+            Assert.assertEquals("1", id);
+            Assert.assertEquals("Cabernet Sauvignon", name);
+            Assert.assertEquals("2016", vintage);
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
     }
@@ -188,13 +192,13 @@ public class SpringBootCucumberTestDefinitions {
      */
     @When("a user updates their UserProfile")
     public void aUserUpdatesTheirUserProfile() {
-        try{
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
-        response = request.get(BASE_URL + port + "/api/profile/1");
-        Assert.assertNotNull(response);
-        } catch(HttpClientErrorException e){
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            request.header("Authorization", "Bearer " + JWT);
+            response = request.get(BASE_URL + port + "/api/profile/1");
+            Assert.assertNotNull(response);
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
     }
@@ -203,7 +207,7 @@ public class SpringBootCucumberTestDefinitions {
     public void theirUserProfileIsUpdated() throws JSONException {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
+        request.header("Authorization", "Bearer " + JWT);
         request.header("Content-Type", "application/json");
         JSONObject requestBody = new JSONObject();
         requestBody.put("username", "kelsoooo");
@@ -217,7 +221,7 @@ public class SpringBootCucumberTestDefinitions {
     public void aUserSearchesForTheirPosts() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
-        request.header("Authorization", "Bearer "+ JWT);
+        request.header("Authorization", "Bearer " + JWT);
         response = request.get(BASE_URL + port + "/api/profile/posts");
         Assert.assertEquals(200, response.getStatusCode());
 
@@ -227,15 +231,16 @@ public class SpringBootCucumberTestDefinitions {
     public void theyShouldSeeAListOfTheirPosts() {
         Assert.assertNotNull(response);
     }
+
     /**
      * POST FEATURES
      */
     @When("user searches for posts about a wine")
     public void userSearchesForPostsAboutAWine() {
         HttpHeaders authenticationHeader = new HttpHeaders();
-        authenticationHeader.set("Authorization","Bearer "+ JWT);
+        authenticationHeader.set("Authorization", "Bearer " + JWT);
         HttpEntity<String> httpEntity = new HttpEntity<>(authenticationHeader);
-        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL+ port+ "/api/posts/1", HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/posts/1", HttpMethod.GET, httpEntity, String.class);
         List<Map<String, String>> posts = JsonPath.from(String.valueOf(response.getBody())).get();
         Assert.assertTrue(posts.size() > 0);
     }
@@ -244,23 +249,35 @@ public class SpringBootCucumberTestDefinitions {
     public void userShouldSeeAListOfPostsAboutAWine() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
     @When("a user searches for posts written by a specific user")
     public void aUserSearchesForPostsWrittenByASpecificUser() {
         HttpHeaders authenticationHeader = new HttpHeaders();
-        authenticationHeader.set("Authorization","Bearer "+ JWT);
+        authenticationHeader.set("Authorization", "Bearer " + JWT);
         HttpEntity<String> httpEntity = new HttpEntity<>(authenticationHeader);
-        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL+ port+ "/api/profile/1/posts", HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/profile/1/posts", HttpMethod.GET, httpEntity, String.class);
         List<Map<String, String>> posts = JsonPath.from(String.valueOf(response.getBody())).get();
         Assert.assertTrue(posts.size() > 0);
     }
 
     @Then("a user should see a list of posts from one user")
     public void aUserShouldSeeAListOfPostsFromOneUser() {
+        Assert.assertEquals(response.getStatusCode(), 200);
     }
 
     @When("a user wants to create a post about a wine")
-    public void aUserWantsToCreateAPostAboutAWine() {
-        
+    public void aUserWantsToCreateAPostAboutAWine() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization","Bearer "+ JWT);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("title", "NEW TITLE");
+        requestBody.put("tastingNotes", "NEW TASTING NOTES");
+        requestBody.put("rating", 0);
+        requestBody.put("imgSrc", "newImage!");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "");
+
     }
 
     @Then("a post about a wine is created")
@@ -268,4 +285,4 @@ public class SpringBootCucumberTestDefinitions {
 
     }
 
-
+}
