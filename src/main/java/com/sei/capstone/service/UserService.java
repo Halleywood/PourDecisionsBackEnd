@@ -1,8 +1,8 @@
 package com.sei.capstone.service;
 
-
 import com.sei.capstone.exceptions.InformationNotFoundException;
 import com.sei.capstone.exceptions.UserExistsException;
+import com.sei.capstone.model.Post;
 import com.sei.capstone.model.User;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.model.login.LoginRequest;
@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -98,7 +99,6 @@ public class UserService {
         } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
     }
 
-
     /**
      * Finds a user by their email.
      * @param email the email of the user to find
@@ -116,7 +116,41 @@ public class UserService {
         }
     }
 
+    public UserProfile updateUserProfile(Long userProfileId, UserProfile profileObject){
+        if (getCurrentLoggedInUser().getId() == userProfileId) {
+            UserProfile profileToUpdate = getOneProfile(userProfileId);
+            if (profileObject.getUserName() != null) {
+                profileToUpdate.setUserName(profileObject.getUserName());
+            }
+            if (profileObject.getTagline() != null) {
+                profileToUpdate.setTagline(profileObject.getTagline());
+            }
+            if (profileObject.getImgSrc() != null) {
+                profileToUpdate.setImgSrc(profileObject.getImgSrc());
+            }
+            userProfileRepository.save(profileToUpdate);
+            return profileToUpdate;
+        } else {
+            throw new RuntimeException("YOU CANNOT UPDATE ANOTHER USER'S PROFILE");
+        }
+    }
 
+    public List<Post> getPostsOfUser(Long userProfileId){
+        Optional<UserProfile> checkForProfile = userProfileRepository.findById(userProfileId);
+        if(checkForProfile.isEmpty()){
+            throw new InformationNotFoundException("No profile with id of "+ userProfileId+ "exists!");
+        }
+        else {
+            List<Post> profilePosts = checkForProfile.get().getUserPosts();
+            if (profilePosts.size() == 0) {
+                throw new InformationNotFoundException("The user with profile id of " + userProfileId + " has no posts yet!");
+            } else {
+                return profilePosts;
+            }
+        }
+    }
 
-
+    public List<Post> getAllYourPosts(){
+        return getCurrentLoggedInUser().getUserPosts();
+    }
 }
