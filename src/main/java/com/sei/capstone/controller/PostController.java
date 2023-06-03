@@ -137,10 +137,16 @@ public class PostController {
         return true;
     }
 
-
-//    @DeleteMapping("/post/{postId}")
-//    public Post deleteAPost(){
-//        //must be the person who wrote it!
-//    }
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<?> deleteAPost(@PathVariable Long postId) throws Exception {
+        Post postToDelete = getOnePost(postId);
+        if(postToDelete.getUserProfile().getId() == getCurrentLoggedInUser().getId()) {
+            postRepo.delete(postToDelete);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Post has been deleted successfully");
+        }
+        else{
+            throw new Exception("You must be the user who created this post to delete it!");
+        }
+    }
 
 }

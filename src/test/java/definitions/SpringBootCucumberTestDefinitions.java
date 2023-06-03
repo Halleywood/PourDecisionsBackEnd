@@ -297,8 +297,8 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("imgSrc", "newImage!");
 
         request.header("Content-Type", "application/json");
-        String postId = "2";
-        response = request.body(requestBody.toString()).put("/api/posts/" + postId);
+
+        response = request.body(requestBody.toString()).put("/api/posts/2");
     }
 
     @Then("the post is updated")
@@ -316,10 +316,15 @@ public class SpringBootCucumberTestDefinitions {
 
     @When("a a user wants to delete their post")
     public void aAUserWantsToDeleteTheirPost() {
-
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization","Bearer "+ JWT);
+        request.header("Content-Type", "application/json");
+        response = request.delete(BASE_URL + port + "/api/posts/2");
     }
 
     @Then("the post is deleted")
     public void thePostIsDeleted() {
+        Assert.assertEquals(204, response.statusCode());
     }
 }
