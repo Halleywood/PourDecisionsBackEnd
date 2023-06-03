@@ -10,6 +10,7 @@ import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.security.JWTUtils;
 import com.sei.capstone.security.MyUserDetails;
+import com.sei.capstone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ import java.util.Base64;
 @CrossOrigin
 public class SecurityController {
 
-    @Autowired
+
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private JWTUtils jwUtils;
@@ -39,42 +40,27 @@ public class SecurityController {
     private MyUserDetails myUserDetails;
     private UserProfileRepository userProfileRepository;
 
-    public SecurityController(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails, UserProfileRepository userProfileRepository ){
+    private UserService userService;
+
+    @Autowired
+    public SecurityController(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails, UserProfileRepository userProfileRepository, UserService userService ){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
         this.myUserDetails = myUserDetails;
         this.userProfileRepository = userProfileRepository;
+        this.userService = userService;
     }
 
     @PostMapping(path="/register")
     public ResponseEntity<?> registerUser(@RequestBody User userObject){
-        if(!userRepository.existsByEmail(userObject.getEmail())){
-            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
-            UserProfile defaultProfile = new UserProfile();
-            userProfileRepository.save(defaultProfile);
-            userObject.setUserProfile(defaultProfile);
-            User newUser = userRepository.save(userObject);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-        }
-        else{
-            throw new UserExistsException("a user already exists with this email, please enter a unique email address");
-        }
+       return userService.registerUser(userObject);
     }
 
     @PostMapping(path="/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            myUserDetails = (MyUserDetails) authentication.getPrincipal();
-            final String JWT = jwUtils.generateJwtToken(myUserDetails);
-            return ResponseEntity.ok(new LoginResponse(JWT));
-        } catch(Exception e){
-            return ResponseEntity.ok(new LoginResponse("Error: username or password is incorrect"));
-        }
+       return userService.login(loginRequest);
     }
 
     @GetMapping(path="/test")

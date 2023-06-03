@@ -7,6 +7,7 @@ import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.repository.WineRepository;
 import com.sei.capstone.security.MyUserDetails;
+import com.sei.capstone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,11 @@ public class UserController {
 
 
     @Autowired
-    private UserRepository userRepo;
+    private UserService userService;
     private UserProfileRepository profileRepo;
 
-    private UserController(UserRepository userRepo, UserProfileRepository profileRepo) {
-        this.userRepo = userRepo;
+    private UserController(UserService userService, UserProfileRepository profileRepo) {
+        this.userService = userService;
         this.profileRepo = profileRepo;
     }
 
@@ -37,6 +38,8 @@ public class UserController {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getUser().getUserProfile();
     }
+
+
     /**
      * GET A USER PROFILE
      * @param userProfileId
