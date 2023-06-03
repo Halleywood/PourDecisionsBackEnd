@@ -27,11 +27,12 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private UserProfileRepository userProfileRepository;
     private PasswordEncoder passwordEncoder;
     private JWTUtils jwUtils;
     private AuthenticationManager authenticationManager;
     private MyUserDetails myUserDetails;
-    private UserProfileRepository userProfileRepository;
+
 
     @Autowired
     public UserService(UserRepository userRepository, UserProfileRepository userProfileRepository, @Lazy PasswordEncoder passwordEncoder, JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager, @Lazy MyUserDetails myUserDetails ){
@@ -43,7 +44,6 @@ public class UserService {
         this.myUserDetails = myUserDetails;
     }
 
-
     /**
      * Retrieves the current logged-in user profile.
      * @return the User instance representing the current logged-in user.
@@ -54,8 +54,9 @@ public class UserService {
     }
     /**
      * CREATE USER
-     * @param userObject the User object containing user details
-     * @return the created User object
+     * @param userObject the User object containing email and password.
+     *        creates an instance of User and instance of UserProfile
+     * @return
      * @throws InformationNotFoundException if a user with the provided email already exists.
      */
     public ResponseEntity<?> registerUser(User userObject){
@@ -75,7 +76,7 @@ public class UserService {
     /**
      * LOGIN USER
      * @param loginRequest
-     * @return
+     * @return Response Entity, creates JWT for header for all protected endpoints.
      */
     public ResponseEntity<?> login(LoginRequest loginRequest){
         try{
@@ -90,6 +91,14 @@ public class UserService {
         }
     }
 
+    public User getCurrentUser(){
+        Optional<User> user = userRepository.findById(getCurrentLoggedInUser().getId());
+        if (user.isPresent()) {
+            return user.get();
+        } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
+    }
+
+
     /**
      * Finds a user by their email.
      * @param email the email of the user to find
@@ -98,14 +107,13 @@ public class UserService {
     public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email);
     }
-
-
-
-    public User getCurrentUser(){
-        Optional<User> user = userRepository.findById(getCurrentLoggedInUser().getId());
-        if (user.isPresent()) {
-            return user.get();
-        } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
+    public UserProfile getOneProfile(Long userProfileId){
+        Optional<UserProfile> profile = userProfileRepository.findById(userProfileId);
+        if (profile.isPresent()) {
+            return profile.get();
+        } else {
+            throw new InformationNotFoundException("There is no User Profile with id " + userProfileId);
+        }
     }
 
 

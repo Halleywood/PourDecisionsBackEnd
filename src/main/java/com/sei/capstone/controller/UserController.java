@@ -47,12 +47,7 @@ public class UserController {
      */
     @GetMapping("/profile/{userProfileId}")
     public UserProfile getOneProfile(@PathVariable Long userProfileId) {
-        Optional<UserProfile> profile = profileRepo.findById(userProfileId);
-        if (profile.isPresent()) {
-            return profile.get();
-        } else {
-            throw new InformationNotFoundException("There is no User Profile with id " + userProfileId);
-        }
+      return userService.getOneProfile(userProfileId);
     }
 
     /**
