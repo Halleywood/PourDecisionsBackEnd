@@ -7,6 +7,7 @@ import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
 import com.sei.capstone.repository.WineRepository;
 import com.sei.capstone.security.MyUserDetails;
+import com.sei.capstone.service.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,10 @@ public class WineController {
     @Autowired
     private UserRepository userRepo;
     private WineRepository wineRepo;
+    private WineService wineService;
 
-    private WineController(UserRepository userRepo, WineRepository wineRepo) {
+    private WineController(WineService wineService, UserRepository userRepo, WineRepository wineRepo) {
+        this.wineService = wineService;
         this.userRepo = userRepo;
         this.wineRepo = wineRepo;
     }
@@ -34,11 +37,7 @@ public class WineController {
      */
     @GetMapping("/wines")
     public List<Wine> getAllWines() {
-        if (wineRepo.findAll().size() > 0) {
-            return wineRepo.findAll();
-        } else {
-            throw new InformationNotFoundException("This wine list is empty");
-        }
+        return wineService.getAllWines();
     }
 
     /**
@@ -48,12 +47,7 @@ public class WineController {
      */
     @GetMapping(path = "/wine/{wineId}")
     public Wine getOneWine(@PathVariable Long wineId) {
-        Optional<Wine> wine = wineRepo.findById(wineId);
-        if (wine.isEmpty()) {
-            throw new InformationNotFoundException("No wine with id of " + wineId + "exists! Please check your search and try again");
-        } else {
-            return wine.get();
-        }
+        return wineService.getOneWine(wineId);
     }
 
 
