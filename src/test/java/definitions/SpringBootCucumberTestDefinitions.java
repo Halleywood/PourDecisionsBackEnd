@@ -240,7 +240,7 @@ public class SpringBootCucumberTestDefinitions {
         HttpHeaders authenticationHeader = new HttpHeaders();
         authenticationHeader.set("Authorization", "Bearer " + JWT);
         HttpEntity<String> httpEntity = new HttpEntity<>(authenticationHeader);
-        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/posts/1", HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/wineposts/1", HttpMethod.GET, httpEntity, String.class);
         List<Map<String, String>> posts = JsonPath.from(String.valueOf(response.getBody())).get();
         Assert.assertTrue(posts.size() > 0);
     }
@@ -276,12 +276,50 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("rating", 0);
         requestBody.put("imgSrc", "newImage!");
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/post/1");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/posts/1");
     }
 
     @Then("a post about a wine is created")
     public void aPostAboutAWineIsCreated() {
-        Assert.assertEquals(201, response.statusCode());
+        Assert.assertEquals(200, response.statusCode());
     }
 
+    @When("a user wants to update their post")
+    public void aUserWantsToUpdateTheirPost() throws JSONException {
+        RestAssured.baseURI = BASE_URL + port;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + JWT);
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("title", "NEW TITLE");
+        requestBody.put("tastingNotes", "NEW TASTING NOTES");
+        requestBody.put("rating", 0);
+        requestBody.put("imgSrc", "newImage!");
+
+        request.header("Content-Type", "application/json");
+        String postId = "2";
+        response = request.body(requestBody.toString()).put("/api/posts/" + postId);
+    }
+
+    @Then("the post is updated")
+    public void thePostIsUpdated() {
+        Assert.assertNotNull(response.getBody());
+        String responseBody = response.getBody().asString();
+        JsonPath jsonPath = JsonPath.from(responseBody);
+        String title = jsonPath.getString("title");
+        String rating = jsonPath.getString("rating");
+        String tastingNotes = jsonPath.getString("tastingNotes");
+        Assert.assertEquals("NEW TITLE", title);
+        Assert.assertEquals("0", rating);
+        Assert.assertEquals("NEW TASTING NOTES", tastingNotes);
+    }
+
+    @When("a a user wants to delete their post")
+    public void aAUserWantsToDeleteTheirPost() {
+
+    }
+
+    @Then("the post is deleted")
+    public void thePostIsDeleted() {
+    }
 }

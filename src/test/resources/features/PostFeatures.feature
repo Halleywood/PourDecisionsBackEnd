@@ -7,7 +7,7 @@ Feature: An authenticated user can see all posts for a wine, can see all of the 
     Then a user should see a list of posts from one user
     When a user wants to create a post about a wine
     Then a post about a wine is created
-#    When a user wants to update their post
-#    Then the post is updated
-#    When a a user wants to delete their post
-#    Then the post is deleted
+    When a user wants to update their post
+    Then the post is updated
+    When a a user wants to delete their post
+    Then the post is deleted

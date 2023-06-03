@@ -262,7 +262,7 @@ public class SeedData implements CommandLineRunner {
         post2.setRating(4);
         post2.setImgSrc("https://sonomawinegarden.com/wp-content/uploads/2022/09/More-About-Telling-If-a-Wine-Is-Bad.jpg");
         post2.setWine(wine);
-        post2.setUserProfile(userProfile);
+        post2.setUserProfile(userProfile2);
         postRepository.save(post2);
 
         Post post3 = new Post();
@@ -282,7 +282,7 @@ public class SeedData implements CommandLineRunner {
         List<Post> userProfile1posts = new ArrayList<>();
         userProfile1posts.add(post1);
         userProfile1posts.add(post2);
-        userProfile.setUserPosts(userProfile1posts);
+        userProfile2.setUserPosts(userProfile1posts);
 
         List<Post> userProfile2posts = new ArrayList<>();
         userProfile2posts.add(post3);
