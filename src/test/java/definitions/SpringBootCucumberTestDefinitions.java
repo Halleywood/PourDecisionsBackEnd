@@ -276,13 +276,12 @@ public class SpringBootCucumberTestDefinitions {
         requestBody.put("rating", 0);
         requestBody.put("imgSrc", "newImage!");
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "");
-
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/post/1");
     }
 
     @Then("a post about a wine is created")
     public void aPostAboutAWineIsCreated() {
-
+        Assert.assertEquals(201, response.statusCode());
     }
 
 }

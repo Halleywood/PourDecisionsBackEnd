@@ -9,11 +9,16 @@ import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.WineRepository;
 import com.sei.capstone.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.Optional;
 
 
@@ -47,30 +52,50 @@ public class PostController {
         return postRepo.findAllByWineId(wineId);
     }
     @PostMapping("/post/{wineId}")
-    public Post createAPost(@PathVariable Long wineId, @RequestBody Post postObject){
+    public ResponseEntity<?> createAPost(@PathVariable Long wineId, @RequestBody Post postObject){
         //make sure the wine exists first.
         Optional<Wine> wine = wineRepo.findById(wineId);
-        if(wine.isPresent()){
-            //save the post object.
-            postObject.setUserProfile(getCurrentLoggedInUser());
-            postObject.setWine(wine.get());
-            Post newPost = postRepo.save(postObject);
-            //save the post to the User's list of posts
-            UserProfile userProfile = getCurrentLoggedInUser();
-            List<Post> userPosts = userProfile.getUserPosts();
-            userPosts.add(postObject);
-            userProfile.setUserPosts(userPosts);
-            //save the post to the Posts about this wine.
-            List<Post> winePosts = wine.get().getPostsAboutThisWine();
-            winePosts.add(newPost);
-            wine.get().setPostsAboutThisWine(winePosts);
-            return newPost;
+        if(wine.isPresent()) {
+            //if the object contains any null fields, send it back.
+            if (!checkAllFields(postObject)) {
+                throw new MissingFormatArgumentException("All fields must contain a value!");
+            } else {
+                //save the post object.
+                postObject.setUserProfile(getCurrentLoggedInUser());
+                postObject.setWine(wine.get());
+                Post newPost = postRepo.save(postObject);
+                //save the post to the User's list of posts
+                UserProfile userProfile = getCurrentLoggedInUser();
+                List<Post> userPosts = userProfile.getUserPosts();
+                userPosts.add(postObject);
+                userProfile.setUserPosts(userPosts);
+                //save the post to the Posts about this wine.
+                List<Post> winePosts = wine.get().getPostsAboutThisWine();
+                winePosts.add(newPost);
+                wine.get().setPostsAboutThisWine(winePosts);
+                return ResponseEntity.status(HttpStatus.CREATED).body("Post created successfully");
+            }
         }
         else{
             throw new InformationNotFoundException("No wine with id " + wineId);
         }
     }
 
+    public static boolean checkAllFields(Post postObject){
+        if(postObject.getTitle() == null){
+            return false;
+        }
+        if(postObject.getTastingNotes() == null){
+            return false;
+        }
+        if(postObject.getRating() == null){
+            return false;
+        }
+        if(postObject.getImgSrc() == null){
+            return false;
+        }
+        return true;
+    }
 //    @PutMapping("/post/{postId}")
 //    public Post updateAPost(){
 //        //can get wine id from post...and user id must match who wrote it...
