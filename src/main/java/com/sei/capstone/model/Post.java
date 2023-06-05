@@ -30,7 +30,7 @@ public class Post {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userProfile_id")
-    @JsonIgnore
+
     private UserProfile userProfile;
 
     public UserProfile getUserProfile() {

@@ -2,6 +2,7 @@ package com.sei.capstone.controller;
 
 import com.sei.capstone.exceptions.InformationNotFoundException;
 import com.sei.capstone.model.Post;
+import com.sei.capstone.model.User;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.repository.UserProfileRepository;
 import com.sei.capstone.repository.UserRepository;
@@ -28,6 +29,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping(path="/get-user")
+    public UserProfile getLoggedInUser(){
+        return userService.getCurrentUser();
+    }
     @GetMapping("/profile/{userProfileId}")
     public UserProfile getOneProfile(@PathVariable Long userProfileId) {
       return userService.getOneProfile(userProfileId);

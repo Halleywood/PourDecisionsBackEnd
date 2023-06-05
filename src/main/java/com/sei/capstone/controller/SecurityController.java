@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path="/auth")
-@CrossOrigin
+@CrossOrigin("*")
 public class SecurityController {
 
     private UserService userService;
@@ -31,4 +31,5 @@ public class SecurityController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
        return userService.login(loginRequest);
     }
+
 }

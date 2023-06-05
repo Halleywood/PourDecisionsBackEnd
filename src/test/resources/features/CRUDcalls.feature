@@ -1,4 +1,5 @@
 Feature: CRUD API calls
+
   Scenario: a logged in user can see all wines and individual wine details
     Given an authenticated user
     When user searches for all wines

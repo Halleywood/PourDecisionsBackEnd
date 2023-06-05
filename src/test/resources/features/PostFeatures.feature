@@ -1,4 +1,5 @@
 Feature: An authenticated user can see all posts for a wine, can see all of the posts written by a user, update and delete their posts.
+
   Scenario: Reading and Writing posts about wine functionality
     Given an authenticated user
     When user searches for posts about a wine

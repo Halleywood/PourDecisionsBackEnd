@@ -92,10 +92,10 @@ public class UserService {
         }
     }
 
-    public User getCurrentUser(){
-        Optional<User> user = userRepository.findById(getCurrentLoggedInUser().getId());
+    public UserProfile getCurrentUser(){
+        Optional<UserProfile> user = userProfileRepository.findById(getCurrentLoggedInUser().getId());
         if (user.isPresent()) {
-            return user.get();
+           return user.get();
         } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
     }
 
