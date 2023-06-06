@@ -2,6 +2,7 @@ package com.sei.capstone.service;
 
 import com.sei.capstone.exceptions.InformationNotFoundException;
 import com.sei.capstone.model.Post;
+import com.sei.capstone.model.PostDTO;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.model.Wine;
 import com.sei.capstone.repository.PostRepository;
@@ -24,10 +25,12 @@ public class PostService {
     @Autowired
     private PostRepository postRepo;
     private WineRepository wineRepo;
+    private UserProfileRepository profileRepo;
 
-    public PostService(PostRepository postRepo, WineRepository wineRepository){
+    public PostService(PostRepository postRepo, WineRepository wineRepository, UserProfileRepository profileRepo){
         this.postRepo = postRepo;
         this.wineRepo = wineRepository;
+        this.profileRepo = profileRepo;
     }
 
     /**
@@ -43,23 +46,31 @@ public class PostService {
         return postRepo.findAllByWineId(wineId);
     }
 
-    public Post createAPost(Long wineId, Post postObject){
+    public Post createAPost(Long wineId, PostDTO postDto){
         //make sure the wine exists first.
         Optional<Wine> wine = wineRepo.findById(wineId);
         if(wine.isPresent()) {
             //if the object contains any null fields, send it back.
-            if (!checkAllFields(postObject)) {
+            if (!checkAllFields(postDto)) {
                 throw new MissingFormatArgumentException("All fields must contain a value!");
             } else {
                 //save the post object.
-                postObject.setUserProfile(getCurrentLoggedInUser());
-                postObject.setWine(wine.get());
-                Post newPost = postRepo.save(postObject);
-                //save the post to the User's list of posts
-                UserProfile userProfile = getCurrentLoggedInUser();
-                List<Post> userPosts = userProfile.getUserPosts();
-                userPosts.add(postObject);
-                userProfile.setUserPosts(userPosts);
+
+                Post newPost = new Post();
+                newPost.setUserProfile(getCurrentLoggedInUser());
+                newPost.setTitle(postDto.getTitle());
+                newPost.setTastingNotes(postDto.getTastingNotes());
+                newPost.setRating(postDto.getRating());
+                newPost.setImgSrc(postDto.getImgSrc());
+                newPost.setWine(wine.get());
+
+
+                List<Post> userPosts = getCurrentLoggedInUser().getUserPosts();
+                userPosts.add(newPost);
+                getCurrentLoggedInUser().setUserPosts(userPosts);
+
+                postRepo.save(newPost);
+
                 //save the post to the Posts about this wine.
                 List<Post> winePosts = wine.get().getPostsAboutThisWine();
                 winePosts.add(newPost);
@@ -117,20 +128,24 @@ public class PostService {
     }
     /**
      * CREATED THIS HELP METHOD TO VERIFY ALL FIELDS IN POST OBJECT
-     * @param postObject
+     * @param postDto
      * @return false if any field is null and will cancel the create method!
      */
-    public static boolean checkAllFields(Post postObject){
-        if(postObject.getTitle() == null){
+    public static boolean checkAllFields(PostDTO postDto){
+        if(postDto.getTitle() == null){
+            System.out.println("error with title");
             return false;
         }
-        if(postObject.getTastingNotes() == null){
+        if(postDto.getTastingNotes() == null){
+            System.out.println("error with tastingnotes");
             return false;
         }
-        if(postObject.getRating() == null){
-            return false;
-        }
-        if(postObject.getImgSrc() == null){
+//        if(postObject.getRating() == null){
+//            System.out.println("error with rating");
+//            return false;
+//        }
+        if(postDto.getImgSrc() == null){
+            System.out.println("error with img src");
             return false;
         }
         return true;

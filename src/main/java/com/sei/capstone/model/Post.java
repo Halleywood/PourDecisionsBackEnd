@@ -2,6 +2,7 @@ package com.sei.capstone.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -30,7 +31,7 @@ public class Post {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userProfile_id")
-
+    @JsonIgnoreProperties(value={"following", "followers"})
     private UserProfile userProfile;
 
     public UserProfile getUserProfile() {

@@ -1,6 +1,7 @@
 package com.sei.capstone.controller;
 
 import com.sei.capstone.model.Post;
+import com.sei.capstone.model.PostDTO;
 import com.sei.capstone.model.UserProfile;
 import com.sei.capstone.security.MyUserDetails;
 import com.sei.capstone.service.PostService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -38,8 +40,8 @@ public class PostController {
         return postService.getAllPostsForWine(wineId);
     }
     @PostMapping("/posts/{wineId}")
-    public Post createAPost(@PathVariable Long wineId, @RequestBody Post postObject){
-       return postService.createAPost(wineId,postObject);
+    public Post createAPost(@PathVariable Long wineId, @RequestBody PostDTO postDto){
+       return postService.createAPost(wineId,postDto);
     }
     @GetMapping("/posts/{postId}")
     public Post getOnePost(@PathVariable Long postId){
