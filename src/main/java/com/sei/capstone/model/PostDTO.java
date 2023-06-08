@@ -1,5 +1,8 @@
 package com.sei.capstone.model;
 
+/**
+ * For transferring form information from the front end as request body.
+ */
 public class PostDTO {
 
     private String title;
