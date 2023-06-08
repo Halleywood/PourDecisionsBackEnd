@@ -29,25 +29,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Retrieves the UserProfile of logged user, obtains userId from currentLoggedInUser behind scenes.
+     * @return UserProfile
+     */
     @GetMapping(path="/get-user")
     public UserProfile getLoggedInUser(){
         return userService.getCurrentUser();
     }
-    @GetMapping("/profile/{userProfileId}")
-    public UserProfile getOneProfile(@PathVariable Long userProfileId) {
-      return userService.getOneProfile(userProfileId);
-    }
 
-    @PutMapping("/profile/{userProfileId}")
-    public UserProfile updateUserProfile(@PathVariable Long userProfileId, @RequestBody UserProfile profileObject) {
-        return userService.updateUserProfile(userProfileId, profileObject);
-    }
-
-    @GetMapping("/profile/{userProfileId}/posts")
-    public List<Post> getPostsOfAUser(@PathVariable Long userProfileId){
-        return userService.getPostsOfUser(userProfileId);
-    }
-
+    /**
+     * Retrieves a list with matching userID of logged in user ID
+     * @return List<Post>
+     */
     @GetMapping("/profile/posts")
     public List<Post> getAllYourPosts() {
         return userService.getAllYourPosts();
