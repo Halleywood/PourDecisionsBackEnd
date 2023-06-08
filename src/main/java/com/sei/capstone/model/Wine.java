@@ -46,6 +46,9 @@ public class Wine {
     @Column
     private String imgSrc;
 
+    /**
+     * A wine can have many posts, and many posts belong to one wine
+     */
     @OneToMany(mappedBy="wine", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Post> postsAboutThisWine;

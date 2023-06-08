@@ -30,10 +30,9 @@ public class WineController {
         this.wineRepo = wineRepo;
     }
 
-
     /**
      * GET ALL WINES
-     * @return
+     * @return List<Wine>
      */
     @GetMapping("/wines")
     public List<Wine> getAllWines() {
@@ -41,9 +40,9 @@ public class WineController {
     }
 
     /**
-     * GET A SINGLE WINE
+     * GET A SINGLE WINE BY ID.
      * @param wineId
-     * @return
+     * @return Wine
      */
     @GetMapping(path = "/wine/{wineId}")
     public Wine getOneWine(@PathVariable Long wineId) {

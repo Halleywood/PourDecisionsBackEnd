@@ -19,6 +19,9 @@ public class WineService {
         this.wineRepository = wineRepository;
     }
 
+    /**
+     * @return a List of Wine objects
+     */
     public List<Wine> getAllWines(){
         if (wineRepository.findAll().size() > 0) {
             return wineRepository.findAll();
@@ -27,6 +30,10 @@ public class WineService {
         }
     }
 
+    /**
+     * @param wineId
+     * @return a single Wine object with corresponding ID
+     */
     public Wine getOneWine(Long wineId){
         Optional<Wine> wine = wineRepository.findById(wineId);
         if (wine.isEmpty()) {

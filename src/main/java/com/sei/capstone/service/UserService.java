@@ -92,6 +92,10 @@ public class UserService {
         }
     }
 
+    /**
+     * uses static method above that retrieves usedID from security context. Once it has userID, retrieves UserProfile from repository.
+     * @returnn UserProfile
+     */
     public UserProfile getCurrentUser(){
         Optional<UserProfile> user = userProfileRepository.findById(getCurrentLoggedInUser().getId());
         if (user.isPresent()) {
@@ -116,40 +120,10 @@ public class UserService {
         }
     }
 
-    public UserProfile updateUserProfile(Long userProfileId, UserProfile profileObject){
-        if (getCurrentLoggedInUser().getId() == userProfileId) {
-            UserProfile profileToUpdate = getOneProfile(userProfileId);
-            if (profileObject.getUserName() != null) {
-                profileToUpdate.setUserName(profileObject.getUserName());
-            }
-            if (profileObject.getTagline() != null) {
-                profileToUpdate.setTagline(profileObject.getTagline());
-            }
-            if (profileObject.getImgSrc() != null) {
-                profileToUpdate.setImgSrc(profileObject.getImgSrc());
-            }
-            userProfileRepository.save(profileToUpdate);
-            return profileToUpdate;
-        } else {
-            throw new RuntimeException("YOU CANNOT UPDATE ANOTHER USER'S PROFILE");
-        }
-    }
-
-    public List<Post> getPostsOfUser(Long userProfileId){
-        Optional<UserProfile> checkForProfile = userProfileRepository.findById(userProfileId);
-        if(checkForProfile.isEmpty()){
-            throw new InformationNotFoundException("No profile with id of "+ userProfileId+ "exists!");
-        }
-        else {
-            List<Post> profilePosts = checkForProfile.get().getUserPosts();
-            if (profilePosts.size() == 0) {
-                throw new InformationNotFoundException("The user with profile id of " + userProfileId + " has no posts yet!");
-            } else {
-                return profilePosts;
-            }
-        }
-    }
-
+    /**
+     * gets userProfile from security context method above,
+     * @return  uses getter method to retrieve just the list of posts from the user.
+     */
     public List<Post> getAllYourPosts(){
         return getCurrentLoggedInUser().getUserPosts();
     }

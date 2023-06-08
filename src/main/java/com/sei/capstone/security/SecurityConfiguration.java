@@ -108,6 +108,10 @@ public class SecurityConfiguration {
                 .getPrincipal();
     }
 
+    /**
+     * Used to connect to h2 database!
+     * @return void
+     */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/h2-console/**");
