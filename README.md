@@ -70,4 +70,3 @@ Ultimately, these are the features and functionality of the application:
 ######  Apache Maven: A special tool for Java applications, it will retrieve and manage all of the project's dependencies for you! 
 * You can visit the Apache Maven official website to learn more about it and view installation instructions: [Install Maven](https://maven.apache.org/download.cgi)
 
-*** THIS IS NOT COMPLETE WORKING ON NOW! 
