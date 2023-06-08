@@ -1,18 +1,14 @@
 ![WINELOGO!](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/e50dcc11-3700-4356-a9f0-9091950406c1)
 # Pour Decisions Backend
-Here we embrace making pour decisions! This Java RESTful API powers the [Angular Front End](https://github.com/Halleywood/PourDecisionsFrontEnd), together they create an interactive wine tasting note application! This API provide a secure and reliable platform for wine enthusiasts to show their passion. With this application, you have the freedom to create your next pour decision and explore all of the pour decisions your friends are making. Discover the wines people are loving and the ones that didn't quite hit the mark, all in one convenient place.
+Here we embrace making pour decisions! This Java RESTful API powers the [Angular Front End](https://github.com/Halleywood/PourDecisionsFrontEnd), and together they create an interactive wine tasting note application! This API provides a secure and reliable platform for wine enthusiasts to show their passion. With this application, you have the freedom to create your next pour decision and explore all of the pour decisions your friends are making. Discover the wines people are loving and the ones that didn't quite hit the mark, all in one convenient place.
 
-By prioritizing user stories, my development process ensured that the end user's experience and needs remained at the forefront from testing to product implementation. Each user story became the driving force for creating thorough test cases, promoting robustness and code reliability.
+By prioritizing user stories, my development process ensured that the end user's experience and needs remained at the forefront; from testing to product implementation. Each user story became the driving force for creating thorough test cases, promoting robustness and code reliability, while ensuring the user's values translated into implemented code.
 
-To achieve an organized and scalable application, I implemented the MVC (Model-View-Controller) architectural pattern. It not only promotes efficient implementation of functionality but also secures future expansion and enhancements beyond this initial application. To guarantee reliable access and data control, I integrated Spring Security into the API. This powerful framework provides dual security through registration and login authentication, while JWT (JSON Web Token) authorization ensures secure data access.
+To achieve an organized and scalable application, I implemented the MVC (Model-View-Controller) architectural pattern. It not only promotes efficient feature implementation, it also secures future expansion beyond this initial application. To guarantee reliable access and data control, I integrated Spring Security into the API. This powerful framework provides dual security through registration and login authentication, alongside JWT (JSON Web Token) authorization.
 
-Ultimately, my API empowers wine enthusiasts with a seamless and secure platform to share their pour decisions, explore new wines, and connect with like-minded individuals with a grape passion for vino! Cheers to making pour decisions together!
+Ultimately, my API empowers wine enthusiasts with a seamless and secure platform to share their pour decisions, explore new wines, and connect with those with a _**grape**_ passion for vino! Cheers to making pour decisions together!
 
 ## Tools and Technologies
-* Development Process
-  * Agile Project Development 
-  * User Stories 
-  * Timeboxing and Visual Timeline 
 * Testing
   * Cucumber with RestAssured 
 * Implementation 
@@ -21,7 +17,8 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
   * H2 database 
   * Postman 
   * Spring Security
-## Hurdles
+## Hurdles & Wins
+#### Hurdles:
 * Time Constraints: 
   * When is this never a hurdle?? My goal for this project was to really think through my planning, setting equally ambitious and attainable goals, and following that plan. 
   * The first two days required quite a bit of setup, and in the nature of agile development, not having quick iterations and feedback made me very nervous. However, I was able to stick to my time constraints even if it did mean leaving features on my wishlist. 
@@ -31,8 +28,14 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
   * I had originally designed this API with the intention of keeping the User's more private information like the email and password seperate from the User's profile data. 
   * I thought I would grab all of this information at once on the frontend registration form and store in a single Data Transfer Object, and then on the backend I would parse the information into their respective entities. 
   * However, I continued to run into errors trying to set the attributes and the relationships in the correct order.
+#### Wins: 
+* Debugging 
+  * I encountered quite a few issues with my setting my data, and I feel like this project really helped solidify model relationships and how that data is set. 
+* Understanding the testing process
+  * At first I was very resistant to the process of writing tests first, but I have seen first hand how anticipating errors and possible edge cases can help write better code and I ran into far fewer issues because I was coding such small increments. 
+  * I also appreciate how the user stories model the tests and really ensure that the end-user's goals are maintained. 
 ## Project Management 
-* Timeline: I prefer to use a Gantt chart because it has a time aspect
+* Timeline: I prefer to use a Gantt chart because it has a visual time aspect that I have found helpful to respect and follow my own timeboxing. 
   ![TIMELINEpourdecisions2](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/f2bf786c-7196-4f7b-b606-4519675b18d6)
 * User Stories:
   ![pourdecisionsuserstories](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/46ccd6b8-4ede-4f8e-b197-30ebfe0b1109)
@@ -66,7 +69,32 @@ Ultimately, these are the features and functionality of the application:
 ####  Want to try it for yourself? In order to run this application on you machine you will need the following dependencies installed before starting: 
 ######  Java Development Kit: The package you need for a running a Java application, includes the Java Runtime Environment and the Java Virtual Machine
 *   You can visit the Oracle webite to learn more about it and view installation instructions:
-[Install JDK](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+[Install JDK](https://www.oracle.com/java/technologies/downloads/#java20)
 ######  Apache Maven: A special tool for Java applications, it will retrieve and manage all of the project's dependencies for you! 
 * You can visit the Apache Maven official website to learn more about it and view installation instructions: [Install Maven](https://maven.apache.org/download.cgi)
+######  Running the application:
+* Once you have installed and confirmed you have the necessary dependencies, go ahead and clone this repositiory and run it on your local machine: 
+1. Open your terminal of choice, and naviagte to the directory where you want to run this application
+2. Paste the following command and hit enter: 
+   ```
+      git clone git@github.com:Halleywood/PourDecisionsFrontEnd.git
+    ```
+   *OR you can download the zip file and extract the files in the directory of your choice. 
+3. Run all of the project dependencies and build the application by first getting into the application folder directory and then run the following command:
+    ```
+      mvn clean install
+    ```
+4. Next, run the following command to run the application: 
+    ```
+    mvn spring-boot:run
+   ```
+5. Now you can navigate to the browser of your choice and checkout all of these endpoints yourself! 
+###### Remember! It's http://localhost: < YOUR PORT > /< API-ENDPOINTS > 
+###### It is usually defaulted to port 8080 but always check in your terminal to see what port the application is running.  
+###### You can also run the following command to see what port your machine is running the application on: 
+```netstat -ano | findstr :<port>```
 
+### I'd like to thank my amazing instructors at Interapt for making this complete application possible! 
+Suresh [](https://github.com/sureshmelvinsigera/)
+Leo [](https://github.com/LRodriguez92)
+Dhrubo 
