@@ -30,8 +30,7 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
 * Data Transfer Objects and ModelMapper 
   * I had originally designed this API with the intention of keeping the User's more private information like the email and password seperate from the User's profile data. 
   * I thought I would grab all of this information at once on the frontend registration form and store in a single Data Transfer Object, and then on the backend I would parse the information into their respective entities. 
-  * However, I continued to run into errors trying to set the attributes and the relationships in the correct order. 
-  * **SCREENSHOT HERE**
+  * However, I continued to run into errors trying to set the attributes and the relationships in the correct order.
 ## Project Management 
 * Timeline: I prefer to use a Gantt chart because it has a time aspect
   ![TIMELINEpourdecisions2](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/f2bf786c-7196-4f7b-b606-4519675b18d6)
