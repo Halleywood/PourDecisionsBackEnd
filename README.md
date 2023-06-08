@@ -95,6 +95,6 @@ Ultimately, these are the features and functionality of the application:
 ```netstat -ano | findstr :<port>```
 
 ### I'd like to thank my amazing instructors at Interapt for making this complete application possible! 
-Suresh [](https://github.com/sureshmelvinsigera/)
-Leo [](https://github.com/LRodriguez92)
-Dhrubo 
+* [Suresh ](https://github.com/sureshmelvinsigera/)
+* [ Leo ](https://github.com/LRodriguez92)
+* Dhrubo 
