@@ -1,4 +1,4 @@
-![](C:\Users\kelse\Desktop\WINELOGO!.jpg)
+![WINELOGO!](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/e50dcc11-3700-4356-a9f0-9091950406c1)
 # Pour Decisions
 Here we embrace making pour decisions! This Java RESTful API powers the [Angular Front End](https://github.com/Halleywood/PourDecisionsFrontEnd), providing a secure and reliable platform for wine enthusiasts to show their passion. With this application, you have the freedom to create your next pour decision and explore the pour decisions your friends are making. Discover the wines people are loving and the ones that didn't quite hit the mark, all in one convenient place.
 
@@ -34,35 +34,35 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
   * **SCREENSHOT HERE**
 ## Project Management 
 * Timeline: I prefer to use a Gantt chart because it has a time aspect
-  ![](C:\Users\kelse\Desktop\TIMELINEpourdecisions2.jpg)
+  ![TIMELINEpourdecisions2](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/f2bf786c-7196-4f7b-b606-4519675b18d6)
 * User Stories:
-![](C:\Users\kelse\Desktop\pourdecisionsuserstories.jpg)
+  ![pourdecisionsuserstories](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/46ccd6b8-4ede-4f8e-b197-30ebfe0b1109)
 * Wireframes:
-  * Login/Registration 
-![](C:\Users\kelse\Desktop\WIREFRAMELANDINGPAGE.jpg)
-  * Home Page: Profile and Menu stay throughout the application 
-![](C:\Users\kelse\Desktop\WIREFRAMEhomepage.jpg)
+  * Login/Registration
+    ![WIREFRAMELANDINGPAGE](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/d18f53a0-05a0-4a49-9069-9fc7c75485ac)
+  * Home Page: Profile and Menu stay throughout the application
+    ![WIREFRAMEhomepage](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/662a8213-f97e-4d1e-bdf5-2254323ab00e)
   * Clickable prototype:
     * Getting a clickable prototype to ensure all data behaving as expected before styling!
-![](C:\Users\kelse\Desktop\CLICKABLElogin.jpg)
-![](C:\Users\kelse\Desktop\CLICKABLEhome.jpg)
+      ![CLICKABLElogin](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/910b4a6d-0d17-4fb6-998d-7aa3b0f6ed3e)
+      ![CLICKABLEhome](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/2d099bf9-f09c-4721-8bc9-89163c28e2f9)
 
 ## ERD Diagram
 * Users to Posts: A User can have many posts, many posts belong to one user. 
 * Wine to Posts: A wine can have many posts, manny posts belong to one wine.
 * Gold feature: creating followers and following relationships between Users
-![](C:\Users\kelse\Desktop\ERDPourDecisions.jpg)
+  ![ERDPourDecisions](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/dc193337-a65e-45f6-9d91-ca1a6fe379eb)
 
 
 ## Features
 Ultimately, these are the features and functionality of the application: 
 * Login and Registration:
 * Retrieving Profile
-![](C:\Users\kelse\Desktop\ENDPOINTSuser.jpg)
+  ![ENDPOINTSuser](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/4bfb5d8e-3254-4b36-aace-0e3e994a7a93)
 * Retrieving all wines, as well as a specific wine by ID to view details
-![](C:\Users\kelse\Desktop\ENDPOINTSwine.jpg)
+  ![ENDPOINTSwine](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/31bc1eec-309d-44e7-978b-d39b3ea90c5f)
 * Full CRUD functionality for "Wine Tasting" posts
-![](C:\Users\kelse\Desktop\ENDPOINTSposts.jpg)
+  ![ENDPOINTSposts](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/bf5a07ec-b569-4cbf-914e-dcb97b7699b2)
 ## Instructions to install 
 ####  Want to try it for yourself? In order to run this application on you machine you will need the following dependencies installed before starting: 
 ######  Java Development Kit: The package you need for a running a Java application, includes the Java Runtime Environment and the Java Virtual Machine
