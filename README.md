@@ -1,5 +1,5 @@
 ![WINELOGO!](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/e50dcc11-3700-4356-a9f0-9091950406c1)
-# Pour Decisions
+# Pour Decisions Backend
 Here we embrace making pour decisions! This Java RESTful API powers the [Angular Front End](https://github.com/Halleywood/PourDecisionsFrontEnd), together they create an interactive wine tasting note application! This API provide a secure and reliable platform for wine enthusiasts to show their passion. With this application, you have the freedom to create your next pour decision and explore all of the pour decisions your friends are making. Discover the wines people are loving and the ones that didn't quite hit the mark, all in one convenient place.
 
 By prioritizing user stories, my development process ensured that the end user's experience and needs remained at the forefront from testing to product implementation. Each user story became the driving force for creating thorough test cases, promoting robustness and code reliability.
