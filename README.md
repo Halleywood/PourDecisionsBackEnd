@@ -33,9 +33,7 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
 ## ERD Diagram
 * Users to Posts: A User can have many posts, many posts belong to one user. 
 * Wine to Posts: A wine can have many posts, manny posts belong to one wine.
-* Gold feature: creating followers and following relationships between Users
-  ![ERDPourDecisions](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/dc193337-a65e-45f6-9d91-ca1a6fe379eb)
-
+  ![ERDpourdecisionsUPDATED](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/c5939143-ee09-42ec-8eeb-60937300603f)
 
 ## Features
 Ultimately, these are the features and functionality of the application: 
