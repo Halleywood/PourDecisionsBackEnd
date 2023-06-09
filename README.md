@@ -17,23 +17,7 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
   * H2 database 
   * Postman 
   * Spring Security
-## Hurdles & Wins
-#### Hurdles:
-* Time Constraints: 
-  * When is this never a hurdle?? My goal for this project was to really think through my planning, setting equally ambitious and attainable goals, and following that plan. 
-  * The first two days required quite a bit of setup, and in the nature of agile development, not having quick iterations and feedback made me very nervous. However, I was able to stick to my time constraints even if it did mean leaving features on my wishlist. 
-* Implementation
-  * This was our first time connecting our backend application to a frontend and I was trying to avoid decision paralysis trying to decide the best approach to developing this project. Driven by user stories and testing, I started on the backend and worked forward. However, by the time I got to the frontend and was handling to data there were quite a few features I wish I had modeled and queried differently. 
-* Data Transfer Objects and ModelMapper 
-  * I had originally designed this API with the intention of keeping the User's more private information like the email and password seperate from the User's profile data. 
-  * I thought I would grab all of this information at once on the frontend registration form and store in a single Data Transfer Object, and then on the backend I would parse the information into their respective entities. 
-  * However, I continued to run into errors trying to set the attributes and the relationships in the correct order.
-#### Wins: 
-* Debugging 
-  * I encountered quite a few issues with my setting my data, and I feel like this project really helped solidify model relationships and how that data is set. 
-* Understanding the testing process
-  * At first I was very resistant to the process of writing tests first, but I have seen first hand how anticipating errors and possible edge cases can help write better code and I ran into far fewer issues because I was coding such small increments. 
-  * I also appreciate how the user stories model the tests and really ensure that the end-user's goals are maintained. 
+
 ## Project Management 
 * Timeline: I prefer to use a Gantt chart because it has a visual time aspect that I have found helpful to respect and follow my own timeboxing. 
   ![TIMELINEpourdecisions2](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/f2bf786c-7196-4f7b-b606-4519675b18d6)
@@ -65,6 +49,25 @@ Ultimately, these are the features and functionality of the application:
   ![ENDPOINTSwine](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/31bc1eec-309d-44e7-978b-d39b3ea90c5f)
 * Full CRUD functionality for "Wine Tasting" posts
   ![ENDPOINTSposts](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/bf5a07ec-b569-4cbf-914e-dcb97b7699b2)
+
+## Hurdles & Wins
+#### Hurdles:
+* Time Constraints:
+  * When is this never a hurdle?? My goal for this project was to really think through my planning, setting equally ambitious and attainable goals, and following that plan.
+  * The first two days required quite a bit of setup, and in the nature of agile development, not having quick iterations and feedback made me very nervous. However, I was able to stick to my time constraints even if it did mean leaving features on my wishlist.
+* Implementation
+  * This was our first time connecting our backend application to a frontend and I was trying to avoid decision paralysis trying to decide the best approach to developing this project. Driven by user stories and testing, I started on the backend and worked forward. However, by the time I got to the frontend and was handling to data there were quite a few features I wish I had modeled and queried differently.
+* Data Transfer Objects and ModelMapper
+  * I had originally designed this API with the intention of keeping the User's more private information like the email and password seperate from the User's profile data.
+  * I thought I would grab all of this information at once on the frontend registration form and store in a single Data Transfer Object, and then on the backend I would parse the information into their respective entities.
+  * However, I continued to run into errors trying to set the attributes and the relationships in the correct order.
+#### Wins:
+* Debugging
+  * I encountered quite a few issues with my setting my data, and I feel like this project really helped solidify model relationships and how that data is set.
+* Understanding the testing process
+  * At first I was very resistant to the process of writing tests first, but I have seen first hand how anticipating errors and possible edge cases can help write better code and I ran into far fewer issues because I was coding such small increments.
+  * I also appreciate how the user stories model the tests and really ensure that the end-user's goals are maintained.
+
 ## Instructions to install 
 ####  Want to try it for yourself? In order to run this application on you machine you will need the following dependencies installed before starting: 
 ######  Java Development Kit: The package you need for a running a Java application, includes the Java Runtime Environment and the Java Virtual Machine
@@ -98,3 +101,4 @@ Ultimately, these are the features and functionality of the application:
 * [Suresh ](https://github.com/sureshmelvinsigera/)
 * [ Leo ](https://github.com/LRodriguez92)
 * Dhrubo 
+

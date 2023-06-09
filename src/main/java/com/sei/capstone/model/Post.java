@@ -45,7 +45,7 @@ public class Post {
     /**
      * many posts belong to one wine
      */
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="wine_id")
     @JsonIgnore
     private Wine wine;
