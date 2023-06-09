@@ -9,6 +9,7 @@ To achieve an organized and scalable application, I implemented the MVC (Model-V
 Ultimately, my API empowers wine enthusiasts with a seamless and secure platform to share their pour decisions, explore new wines, and connect with those with a _**grape**_ passion for vino! Cheers to making pour decisions together!
 
 ## Tools and Technologies
+* Java Spring Boot Application which is consumed on the frontend by Angular
 * Testing
   * Cucumber with RestAssured 
 * Implementation 
@@ -28,10 +29,6 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
     ![WIREFRAMELANDINGPAGE](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/d18f53a0-05a0-4a49-9069-9fc7c75485ac)
   * Home Page: Profile and Menu stay throughout the application
     ![WIREFRAMEhomepage](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/662a8213-f97e-4d1e-bdf5-2254323ab00e)
-  * Clickable prototype:
-    * Getting a clickable prototype to ensure all data behaving as expected before styling!
-      ![CLICKABLElogin](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/910b4a6d-0d17-4fb6-998d-7aa3b0f6ed3e)
-      ![CLICKABLEhome](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/2d099bf9-f09c-4721-8bc9-89163c28e2f9)
 
 ## ERD Diagram
 * Users to Posts: A User can have many posts, many posts belong to one user. 
