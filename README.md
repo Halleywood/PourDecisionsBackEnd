@@ -33,6 +33,7 @@ Ultimately, my API empowers wine enthusiasts with a seamless and secure platform
 ## ERD Diagram
 * Users to Posts: A User can have many posts, many posts belong to one user. 
 * Wine to Posts: A wine can have many posts, manny posts belong to one wine.
+* One User to One User Profile: the idea was to separate User's personal data (email and password) separate from other unique personal information related to the profile. 
   ![ERDpourdecisionsUPDATED](https://github.com/Halleywood/PourDecisionsBackEnd/assets/87944545/c5939143-ee09-42ec-8eeb-60937300603f)
 
 ## Features
